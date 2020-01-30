@@ -77,7 +77,9 @@
             sMPullSOProxy.DivTerms = new List<string>();
             sMPullSOProxy.Interval = 1;
             List<UFIDA.U9.SM.Ship.TransformByOrgDTO> list2 = new List<UFIDA.U9.SM.Ship.TransformByOrgDTO>();
-            try
+            using (UFSoft.UBF.Transactions.UBFTransactionScope scope = new UFSoft.UBF.Transactions.UBFTransactionScope(UFSoft.UBF.Transactions.TransactionOption.RequiresNew))
+            {
+                try
             {
                 bool IsConsign = false;
                 debugInfo.AppendLine("遍历行start..");
@@ -196,17 +198,23 @@
                         shipApproveRequest.DocNo = ship.DocNo;
                         shipApproveRequest.OrgID = ship.Org.ID;
                         sv2.JsonRequest = JsonUtil.GetJsonString(shipApproveRequest);
-                        return sv2.Do();
-                    }
+                            res.Append(sv2.Do());
+                            scope.Commit();
+                            return res.ToString();
+                        }
                 }
-                return JsonUtil.GetSuccessResponse(response,debugInfo);
+                    scope.Commit();
+                    return JsonUtil.GetSuccessResponse(response,debugInfo);
             }
             catch (Exception ex)
             {
                 LogUtil.WriteDebugInfoLog(debugInfo.ToString());
-                throw U9Exception.GetInnerException(ex);
+                //throw Base.U9Exception.GetInnerException(ex);
+                scope.Rollback();
+                return JsonUtil.GetFailResponse(ex, debugInfo);//返回，不执行 scope.Commit();就会回滚
             }
         }
+    }
     }
 
     #endregion

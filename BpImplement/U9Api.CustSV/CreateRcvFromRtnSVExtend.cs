@@ -62,8 +62,9 @@
                StringBuilder errorInfo = new StringBuilder();
           debugInfo.AppendLine("strat...");
             debugInfo.AppendLine(JsonUtil.GetJsonString(Context.LoginOrg == null ? "Context.LoginOrg==null" : "Context.LoginOrg ok" + Context.LoginOrg.ID));
-
-            try
+            using (UFSoft.UBF.Transactions.UBFTransactionScope scope = new UFSoft.UBF.Transactions.UBFTransactionScope(UFSoft.UBF.Transactions.TransactionOption.RequiresNew))
+            {
+                try
             {
                 List<RcvFromPODTO> list = new List<RcvFromPODTO>();
                 RTNToRtnRcvSV sv1 = new RTNToRtnRcvSV();
@@ -265,17 +266,23 @@
                     RcvApproveRequest shipApproveRequest = new RcvApproveRequest();
                     shipApproveRequest.DocNo = r.DocNo;
                     sv2.JsonRequest = JsonUtil.GetJsonString(shipApproveRequest);
-                    return sv2.Do();
-                }
-                //return r.DocNo;
-                //return JsonUtil.GetSuccessResponse(r.DocNo,debugInfo);
+                        res.Append(sv2.Do());
+                        scope.Commit();
+                        return res.ToString();
+                    }
+                    //return r.DocNo;
+                    //return JsonUtil.GetSuccessResponse(r.DocNo,debugInfo);
 
-                return JsonUtil.GetSuccessResponse(r.DocNo, r.Status.Name, debugInfo);
+                    scope.Commit();
+                    return JsonUtil.GetSuccessResponse(r.DocNo, r.Status.Name, debugInfo);
             }
-            catch (Exception ex)
-            {
-                LogUtil.WriteDebugInfoLog(debugInfo.ToString());
-                throw Base.U9Exception.GetInnerException(ex);
+                catch (Exception ex)
+                {
+                    LogUtil.WriteDebugInfoLog(debugInfo.ToString());
+                    //throw Base.U9Exception.GetInnerException(ex);
+                    scope.Rollback();
+                    return JsonUtil.GetFailResponse(ex, debugInfo);//返回，不执行 scope.Commit();就会回滚
+                }
             }
         }		
 	}

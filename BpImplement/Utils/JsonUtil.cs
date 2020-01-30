@@ -80,5 +80,9 @@ namespace U9Api.CustSV.Utils
             else
                 return GetJsonResponse(U9Contant.Fail_CODE, custMsg, null, null);
         }
+        public static string GetFailResponse(Exception ex, StringBuilder debugInfo = null)
+        {
+            return GetFailResponse(U9Exception.GetInnerExceptionMsg(ex),debugInfo);
+        }
     }
 }

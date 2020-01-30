@@ -57,8 +57,9 @@
 			StringBuilder debugInfo = new StringBuilder();
 			debugInfo.AppendLine("strat...");
 			debugInfo.AppendLine(JsonUtil.GetJsonString(Context.LoginOrg == null ? "Context.LoginOrg==null" : "Context.LoginOrg ok" + Context.LoginOrg.ID));
-
-			try
+			using (UFSoft.UBF.Transactions.UBFTransactionScope scope = new UFSoft.UBF.Transactions.UBFTransactionScope(UFSoft.UBF.Transactions.TransactionOption.RequiresNew))
+			{
+				try
 			{
 				DocTypeCustEnum docTypeCustEnum = (DocTypeCustEnum)System.Enum.Parse(typeof(DocTypeCustEnum), reqHeader.DocTypeCode, true);
 				bool isDeleted = true;
@@ -354,15 +355,20 @@
 				}
 				if (!isDeleted)
 				{
-					return JsonUtil.GetFailResponse("没有找到此单据类型的删除方法", debugInfo);
+						scope.Rollback();
+						return JsonUtil.GetFailResponse("没有找到此单据类型的删除方法", debugInfo);
 				}
 
-				return JsonUtil.GetSuccessResponse(reqHeader.WmsDocNo + "删除成功", debugInfo);
+					scope.Commit();
+					return JsonUtil.GetSuccessResponse(reqHeader.WmsDocNo + "删除成功", debugInfo);
 			}
-			catch (Exception ex)
-			{
-				LogUtil.WriteDebugInfoLog(debugInfo.ToString());
-				throw Base.U9Exception.GetInnerException(ex);
+				catch (Exception ex)
+				{
+					LogUtil.WriteDebugInfoLog(debugInfo.ToString());
+					//throw Base.U9Exception.GetInnerException(ex);
+					scope.Rollback();
+					return JsonUtil.GetFailResponse(ex, debugInfo);//返回，不执行 scope.Commit();就会回滚
+				}
 			}
 		}
 

@@ -59,8 +59,9 @@
 			UFIDA.U9.Base.Organization.Organization organization = UFIDA.U9.Base.Organization.Organization.FindByCode(reqHeader.OutOrg);
 			if (organization == null)
 				return JsonUtil.GetFailResponse("organization == null",debugInfo);
-
-			try
+			using (UFSoft.UBF.Transactions.UBFTransactionScope scope = new UFSoft.UBF.Transactions.UBFTransactionScope(UFSoft.UBF.Transactions.TransactionOption.RequiresNew))
+			{
+				try
 			{
 				List<TransferOutToTransInDTO> list = new List<TransferOutToTransInDTO>();
 
@@ -160,15 +161,21 @@
 					req.DocNo = doc.DocNo;
 					req.BusinessDate = reqHeader.BusinessDate;
 					sv3.JsonRequest = JsonUtil.GetJsonString(req);
-					return sv3.Do();
-				}
+						res.Append(sv3.Do());
+						scope.Commit();
+						return res.ToString();
+					}
 
-				return JsonUtil.GetSuccessResponse(doc.DocNo, doc.Status.Name, debugInfo);
+					scope.Commit();
+					return JsonUtil.GetSuccessResponse(doc.DocNo, doc.Status.Name, debugInfo);
 			}
-			catch (Exception ex)
-			{
-				LogUtil.WriteDebugInfoLog(debugInfo.ToString());
-				throw Base.U9Exception.GetInnerException(ex);
+				catch (Exception ex)
+				{
+					LogUtil.WriteDebugInfoLog(debugInfo.ToString());
+					//throw Base.U9Exception.GetInnerException(ex);
+					scope.Rollback();
+					return JsonUtil.GetFailResponse(ex, debugInfo);//返回，不执行 scope.Commit();就会回滚
+				}
 			}
 		}
 	}

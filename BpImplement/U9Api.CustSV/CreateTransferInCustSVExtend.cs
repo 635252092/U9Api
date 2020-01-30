@@ -58,8 +58,9 @@
             StringBuilder debugInfo = new StringBuilder();
             debugInfo.AppendLine("strat...");
             debugInfo.AppendLine(JsonUtil.GetJsonString(Context.LoginOrg == null ? "Context.LoginOrg==null" : "Context.LoginOrg ok" + Context.LoginOrg.ID));
-
-			try
+            using (UFSoft.UBF.Transactions.UBFTransactionScope scope = new UFSoft.UBF.Transactions.UBFTransactionScope(UFSoft.UBF.Transactions.TransactionOption.RequiresNew))
+            {
+                try
 			{
                 CommonCreateTransferInSV client = new CommonCreateTransferInSV();
                 client.TransferInDTOList = new List<IC_TransferInDTO>();
@@ -198,15 +199,21 @@
                     req.DocNo = transferIn.DocNo;
                     req.BusinessDate = reqHeader.BusinessDate;
                     sv2.JsonRequest = JsonUtil.GetJsonString(req);
-                    return sv2.Do();
-                }
+                        res.Append(sv2.Do());
+                        scope.Commit();
+                        return res.ToString();
+                    }
 
-                return JsonUtil.GetSuccessResponse(transferIn.DocNo, "", debugInfo);
+                    scope.Commit();
+                    return JsonUtil.GetSuccessResponse(transferIn.DocNo, "", debugInfo);
             }
-            catch (Exception ex)
-            {
-                LogUtil.WriteDebugInfoLog(debugInfo.ToString());
-                throw Base.U9Exception.GetInnerException(ex);
+                catch (Exception ex)
+                {
+                    LogUtil.WriteDebugInfoLog(debugInfo.ToString());
+                    //throw Base.U9Exception.GetInnerException(ex);
+                    scope.Rollback();
+                    return JsonUtil.GetFailResponse(ex, debugInfo);//返回，不执行 scope.Commit();就会回滚
+                }
             }
         }		
 	}

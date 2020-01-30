@@ -59,8 +59,9 @@
             StringBuilder errorInfo = new StringBuilder();
             debugInfo.AppendLine("strat...");
             debugInfo.AppendLine(JsonUtil.GetJsonString(Context.LoginOrg == null ? "Context.LoginOrg==null" : "Context.LoginOrg ok" + Context.LoginOrg.ID));
-
-            try
+            using (UFSoft.UBF.Transactions.UBFTransactionScope scope = new UFSoft.UBF.Transactions.UBFTransactionScope(UFSoft.UBF.Transactions.TransactionOption.RequiresNew))
+            {
+                try
             {
                 List<RcvFromPODTO> list = new List<RcvFromPODTO>();
                 POToRcvSV pOToRcvSVProxy = new POToRcvSV();
@@ -220,15 +221,21 @@
                         RcvApproveRequest shipApproveRequest = new RcvApproveRequest();
                         shipApproveRequest.DocNo = receivement.DocNo;
                         sv2.JsonRequest = JsonUtil.GetJsonString(shipApproveRequest);
-                        return sv2.Do();
-                    }
+                            res.Append(sv2.Do());
+                            scope.Commit();
+                            return res.ToString();
+                        }
                 }
-                return JsonUtil.GetSuccessResponse(res.ToString(), debugInfo);
+                    scope.Commit();
+                    return JsonUtil.GetSuccessResponse(res.ToString(), debugInfo);
             }
-            catch (Exception ex)
-            {
-                LogUtil.WriteDebugInfoLog(debugInfo.ToString());
-                throw Base.U9Exception.GetInnerException(ex);
+                catch (Exception ex)
+                {
+                    LogUtil.WriteDebugInfoLog(debugInfo.ToString());
+                    //throw Base.U9Exception.GetInnerException(ex);
+                    scope.Rollback();
+                    return JsonUtil.GetFailResponse(ex, debugInfo);//返回，不执行 scope.Commit();就会回滚
+                }
             }
         }
     }

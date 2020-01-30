@@ -60,137 +60,144 @@
             debugInfo.AppendLine("strat...");
             debugInfo.AppendLine(JsonUtil.GetJsonString(Context.LoginOrg == null ? "Context.LoginOrg==null" : "Context.LoginOrg ok" + Context.LoginOrg.ID));
 
-
-            try
+            using (UFSoft.UBF.Transactions.UBFTransactionScope scope = new UFSoft.UBF.Transactions.UBFTransactionScope(UFSoft.UBF.Transactions.TransactionOption.RequiresNew))
             {
-                CommonCreateMiscShip client = new CommonCreateMiscShip();
-                client.ContextFrom = new UFIDA.U9.CBO.Pub.Controller.ContextDTO();
-                client.ContextFrom.CultureName = Context.LoginLanguageCode;
-                client.ContextFrom.EntCode = reqHeader.EntCode;
-                client.ContextFrom.OrgCode = Context.LoginOrg.Code;
-                client.ContextFrom.OrgID = Context.LoginOrg.ID;
-
-                UFIDA.U9.Base.UserRole.User user = UFIDA.U9.Base.UserRole.User.Finder.FindByID(Context.LoginUserID);
-
-                if (user == null)
+                try
                 {
-                    return JsonUtil.GetFailResponse("user == null", debugInfo);
-                }
-                client.ContextFrom.UserCode = user.Code;
-                client.ContextFrom.UserID = user.ID;
+                    CommonCreateMiscShip client = new CommonCreateMiscShip();
+                    client.ContextFrom = new UFIDA.U9.CBO.Pub.Controller.ContextDTO();
+                    client.ContextFrom.CultureName = Context.LoginLanguageCode;
+                    client.ContextFrom.EntCode = reqHeader.EntCode;
+                    client.ContextFrom.OrgCode = Context.LoginOrg.Code;
+                    client.ContextFrom.OrgID = Context.LoginOrg.ID;
 
-                IC_MiscShipmentDTO dtoHeader = new IC_MiscShipmentDTO();
+                    UFIDA.U9.Base.UserRole.User user = UFIDA.U9.Base.UserRole.User.Finder.FindByID(Context.LoginUserID);
 
-                //头
-                dtoHeader.MiscShipDocType = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
-                //dto.MiscShipDocType.Code = "MiscShip001";
-                MiscShipDocType miscShipDocType = MiscShipDocType.Finder.Find(string.Format("Org={0} and Code='{1}'",Context.LoginOrg.ID, reqHeader.DocTypeCode));
-                if (miscShipDocType == null)
-                {
-                    return JsonUtil.GetFailResponse(reqHeader.DocTypeCode+U9Contant.NoFindDocType);
-                }
-                dtoHeader.MiscShipDocType.ID = miscShipDocType.ID;
-                if(!string.IsNullOrEmpty(reqHeader.WmsDocNo))
-                dtoHeader.DocNo = reqHeader.WmsDocNo;
-                dtoHeader.Org = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
-                dtoHeader.Org.ID = Context.LoginOrg.ID;
-                dtoHeader.BenefitOrg = Context.LoginOrg.ID;
-                dtoHeader.BusinessDate = DateTime.Parse(reqHeader.BusinessDate);
-
-                dtoHeader.Memo = reqHeader.Remark;
-                dtoHeader.MiscShipLs = new List<IC_MiscShipmentLDTO>();
-                dtoHeader.SysState = ObjectState.Inserted;
-
-                foreach (var reqLine in reqHeader.CreateMiscShipLines)
-                {
-                    IC_MiscShipmentLDTO dtoLine = new IC_MiscShipmentLDTO();
-
-                    //行
-                    Warehouse benefitWH = Warehouse.FindByCode(Context.LoginOrg, reqLine.BenefitWHCode);
-                    if (benefitWH == null)
+                    if (user == null)
                     {
-                        return JsonUtil.GetFailResponse(reqLine.BenefitWHCode+":受益仓库不能为空", debugInfo);
+                        return JsonUtil.GetFailResponse("user == null", debugInfo);
                     }
-                    dtoLine.BenefitWh = benefitWH.ID;
-                    dtoLine.IsMFG = miscShipDocType.IsMFG;
+                    client.ContextFrom.UserCode = user.Code;
+                    client.ContextFrom.UserID = user.ID;
 
-                    dtoLine.BenefitDept = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
-                    UFIDA.U9.CBO.HR.Department.Department department= UFIDA.U9.CBO.HR.Department.Department.FindByCode(reqLine.BenefitDeptCode);
-                    if (department == null)
+                    IC_MiscShipmentDTO dtoHeader = new IC_MiscShipmentDTO();
+
+                    //头
+                    dtoHeader.MiscShipDocType = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
+                    //dto.MiscShipDocType.Code = "MiscShip001";
+                    MiscShipDocType miscShipDocType = MiscShipDocType.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, reqHeader.DocTypeCode));
+                    if (miscShipDocType == null)
                     {
-                        return JsonUtil.GetFailResponse(reqLine.BenefitDeptCode+"：受益部门不能为空", debugInfo);
+                        return JsonUtil.GetFailResponse(reqHeader.DocTypeCode + U9Contant.NoFindDocType);
                     }
-                    dtoLine.BenefitDept.ID = department.ID;
-                    //if (benefitWH.Manager != null)
-                    //{
-                    //    dtoLine.BenefitPsn = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
-                    //    dtoLine.BenefitPsn.ID = benefitWH.Manager.ID;
-                    //}
-                    dtoLine.BenefitOrg = Context.LoginOrg.ID;
+                    dtoHeader.MiscShipDocType.ID = miscShipDocType.ID;
+                    if (!string.IsNullOrEmpty(reqHeader.WmsDocNo))
+                        dtoHeader.DocNo = reqHeader.WmsDocNo;
+                    dtoHeader.Org = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
+                    dtoHeader.Org.ID = Context.LoginOrg.ID;
+                    dtoHeader.BenefitOrg = Context.LoginOrg.ID;
+                    dtoHeader.BusinessDate = DateTime.Parse(reqHeader.BusinessDate);
 
-                    dtoLine.ItemInfo = new UFIDA.U9.CBO.SCM.Item.ItemInfo();
-                    dtoLine.ItemInfo.ItemCode = reqLine.ItemCode;
+                    dtoHeader.Memo = reqHeader.Remark;
+                    dtoHeader.MiscShipLs = new List<IC_MiscShipmentLDTO>();
+                    dtoHeader.SysState = ObjectState.Inserted;
 
-                    dtoLine.CostUOMQty = reqLine.ItemQty;
-                    dtoLine.StoreUOMQty = reqLine.ItemQty;
-                    dtoLine.OwnerOrg = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
-                    dtoLine.OwnerOrg.ID = Context.LoginOrg.ID;
-                    dtoLine.StoreType = UFIDA.U9.CBO.Enums.StorageTypeEnum.Useable;
-                    dtoLine.SUToCURate = 1;
-                    dtoLine.SUToSBURate = 1;
-
-                    dtoLine.Wh = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
-                    dtoLine.Wh.Code = reqLine.FromWHCode;
-                    //批号赋值
-                    long lotKey = 0L;
-                    if (!string.IsNullOrEmpty(reqLine.LotCode) && CommonUtil.IsNeedLot(reqLine.ItemCode, Context.LoginOrg.ID))
+                    foreach (var reqLine in reqHeader.CreateMiscShipLines)
                     {
-                        LotMaster curLot = CommonUtil.GetLot(reqLine.LotCode, reqLine.ItemCode, reqLine.FromWHCode, LotSnStatusEnum.I_MiscShipment.Value);
-                        lotKey = curLot.ID;
-                    }
-                    if (lotKey > 0L)
-                    {
-                        dtoLine.LotInfo = new UFIDA.U9.CBO.SCM.PropertyTypes.LotInfo();
-                        dtoLine.LotInfo.LotCode = reqLine.LotCode;
-                        dtoLine.LotInfo.LotMaster = new UFIDA.U9.Base.PropertyTypes.BizEntityKey();
-                        dtoLine.LotInfo.LotMaster.EntityID = lotKey;
-                    }
-                    dtoLine.SysState = ObjectState.Inserted;
-                    dtoLine.MiscShipBins = new List<IC_MiscShipBinDTO>();
-                    dtoLine.MiscShipmentCost = new List<IC_MiscShipmentCostDTO>();
-                    dtoHeader.MiscShipLs.Add(dtoLine);
-                }
-                client.MiscShipmentDTOList = new List<IC_MiscShipmentDTO>();
-                client.MiscShipmentDTOList.Add(dtoHeader);
+                        IC_MiscShipmentLDTO dtoLine = new IC_MiscShipmentLDTO();
 
-                List<CommonArchiveDataDTO> listRes = client.Do();
-                if (listRes == null || listRes.Count == 0)
-                {
-                    return JsonUtil.GetFailResponse("resDto == null || resDto.Count == 0", debugInfo);
-                }
-                CommonArchiveDataDTO doc = listRes[0];
-                //修改批号的有效期
-                string sql = string.Format(@"UPDATE line SET LotInfo_DisabledDatetime=NULL from  InvDoc_MiscShipL line 
+                        //行
+                        Warehouse benefitWH = Warehouse.FindByCode(Context.LoginOrg, reqLine.BenefitWHCode);
+                        if (benefitWH == null)
+                        {
+                            return JsonUtil.GetFailResponse(reqLine.BenefitWHCode + ":受益仓库不能为空", debugInfo);
+                        }
+                        dtoLine.BenefitWh = benefitWH.ID;
+                        dtoLine.IsMFG = miscShipDocType.IsMFG;
+
+                        dtoLine.BenefitDept = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
+                        UFIDA.U9.CBO.HR.Department.Department department = UFIDA.U9.CBO.HR.Department.Department.FindByCode(reqLine.BenefitDeptCode);
+                        if (department == null)
+                        {
+                            return JsonUtil.GetFailResponse(reqLine.BenefitDeptCode + "：受益部门不能为空", debugInfo);
+                        }
+                        dtoLine.BenefitDept.ID = department.ID;
+                        //if (benefitWH.Manager != null)
+                        //{
+                        //    dtoLine.BenefitPsn = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
+                        //    dtoLine.BenefitPsn.ID = benefitWH.Manager.ID;
+                        //}
+                        dtoLine.BenefitOrg = Context.LoginOrg.ID;
+
+                        dtoLine.ItemInfo = new UFIDA.U9.CBO.SCM.Item.ItemInfo();
+                        dtoLine.ItemInfo.ItemCode = reqLine.ItemCode;
+
+                        dtoLine.CostUOMQty = reqLine.ItemQty;
+                        dtoLine.StoreUOMQty = reqLine.ItemQty;
+                        dtoLine.OwnerOrg = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
+                        dtoLine.OwnerOrg.ID = Context.LoginOrg.ID;
+                        dtoLine.StoreType = UFIDA.U9.CBO.Enums.StorageTypeEnum.Useable;
+                        dtoLine.SUToCURate = 1;
+                        dtoLine.SUToSBURate = 1;
+
+                        dtoLine.Wh = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
+                        dtoLine.Wh.Code = reqLine.FromWHCode;
+                        //批号赋值
+                        long lotKey = 0L;
+                        if (!string.IsNullOrEmpty(reqLine.LotCode) && CommonUtil.IsNeedLot(reqLine.ItemCode, Context.LoginOrg.ID))
+                        {
+                            LotMaster curLot = CommonUtil.GetLot(reqLine.LotCode, reqLine.ItemCode, reqLine.FromWHCode, LotSnStatusEnum.I_MiscShipment.Value);
+                            lotKey = curLot.ID;
+                        }
+                        if (lotKey > 0L)
+                        {
+                            dtoLine.LotInfo = new UFIDA.U9.CBO.SCM.PropertyTypes.LotInfo();
+                            dtoLine.LotInfo.LotCode = reqLine.LotCode;
+                            dtoLine.LotInfo.LotMaster = new UFIDA.U9.Base.PropertyTypes.BizEntityKey();
+                            dtoLine.LotInfo.LotMaster.EntityID = lotKey;
+                        }
+                        dtoLine.SysState = ObjectState.Inserted;
+                        dtoLine.MiscShipBins = new List<IC_MiscShipBinDTO>();
+                        dtoLine.MiscShipmentCost = new List<IC_MiscShipmentCostDTO>();
+                        dtoHeader.MiscShipLs.Add(dtoLine);
+                    }
+                    client.MiscShipmentDTOList = new List<IC_MiscShipmentDTO>();
+                    client.MiscShipmentDTOList.Add(dtoHeader);
+
+                    List<CommonArchiveDataDTO> listRes = client.Do();
+                    if (listRes == null || listRes.Count == 0)
+                    {
+                        return JsonUtil.GetFailResponse("resDto == null || resDto.Count == 0", debugInfo);
+                    }
+                    CommonArchiveDataDTO doc = listRes[0];
+                    //修改批号的有效期
+                    string sql = string.Format(@"UPDATE line SET LotInfo_DisabledDatetime=NULL from  InvDoc_MiscShipL line 
 INNER JOIN InvDoc_MiscShip header on line.MiscShip=header.ID
 where header.Org = {0} AND header.DocNo = '{1}'", Context.LoginOrg.ID, doc.Code);
-                CommonUtil.RunUpdateSQL(sql);
-                debugInfo.AppendLine(sql);
+                    CommonUtil.RunUpdateSQL(sql);
+                    debugInfo.AppendLine(sql);
 
-                if (reqHeader.IsAutoApprove)
-                {
-                    U9Api.CustSV.ApproveMiscShipCustSV sv2 = new
-                      ApproveMiscShipCustSV();
-                    CommonApproveRequest req = new CommonApproveRequest();
-                    req.DocNo = doc.Code;
-                    sv2.JsonRequest = JsonUtil.GetJsonString(req);
-                    return sv2.Do();
+                    if (reqHeader.IsAutoApprove)
+                    {
+                        U9Api.CustSV.ApproveMiscShipCustSV sv2 = new
+                          ApproveMiscShipCustSV();
+                        CommonApproveRequest req = new CommonApproveRequest();
+                        req.DocNo = doc.Code;
+                        sv2.JsonRequest = JsonUtil.GetJsonString(req);
+                        res.Append(sv2.Do());
+                        scope.Commit();
+                        return res.ToString();
+                    }
+                    scope.Commit();
+                    return JsonUtil.GetSuccessResponse(doc.Code, "", debugInfo);
                 }
-                return JsonUtil.GetSuccessResponse(doc.Code, "", debugInfo);
-            }
-            catch (Exception ex)
-            {
-                LogUtil.WriteDebugInfoLog(debugInfo.ToString());
-                throw Base.U9Exception.GetInnerException(ex);
+                catch (Exception ex)
+                {
+                    LogUtil.WriteDebugInfoLog(debugInfo.ToString());
+                    //throw Base.U9Exception.GetInnerException(ex);
+                    scope.Rollback();
+                    return JsonUtil.GetFailResponse(ex, debugInfo);//返回，不执行 scope.Commit();就会回滚
+                }
             }
         }
     }

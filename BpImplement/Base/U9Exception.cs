@@ -16,6 +16,13 @@ namespace U9Api.CustSV.Base
             //return res;
             return new Exception(res.Message);
         }
+        public static string GetInnerExceptionMsg(Exception ex)
+        {
+
+            Exception res = ex.InnerException ?? ex;
+            LogUtil.WriteExceptionLog(res.ToString());
+            return res.Message;
+        }
         public static Exception GetException(string msg, StringBuilder sb=null)
         {
             if (sb != null)

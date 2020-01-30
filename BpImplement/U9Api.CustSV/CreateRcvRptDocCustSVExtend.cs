@@ -175,23 +175,6 @@ where header.Org = {0} AND header.DocNo = '{1}'", Context.LoginOrg.ID, rcvRptDoc
                         }
                     }
                 }
-                //catch (Exception ex)
-                //{
-                //    if (!string.IsNullOrEmpty(sourceDocNo))
-                //    {
-                //        LogUtil.WriteDebugInfoLog("删除start");
-                //        DeleteCustSV deleteCustSV = new DeleteCustSV();
-                //        DeleteCustRequest deleteCustRequest = new DeleteCustRequest();
-                //        deleteCustRequest.WmsDocNo = sourceDocNo;
-                //        deleteCustRequest.DocTypeCode = Model.Enum.DocTypeCustEnum.RcvRptDoc.ToString();
-
-                //        deleteCustSV.JsonRequest = JsonUtil.GetJsonString(deleteCustRequest);
-                //        deleteCustSV.Do();
-                //        LogUtil.WriteDebugInfoLog("删除end");
-                //    }
-                //    LogUtil.WriteDebugInfoLog(debugInfo.ToString());
-                //    throw Base.U9Exception.GetInnerException(ex);
-                //}
                 catch (Exception ex)
                 {
                     if (!string.IsNullOrEmpty(sourceDocNo))
