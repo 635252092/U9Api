@@ -65,144 +65,171 @@
             using (UFSoft.UBF.Transactions.UBFTransactionScope scope = new UFSoft.UBF.Transactions.UBFTransactionScope(UFSoft.UBF.Transactions.TransactionOption.RequiresNew))
             {
                 try
-			{
-                CommonCreateTransferInSV client = new CommonCreateTransferInSV();
-                client.TransferInDTOList = new List<IC_TransferInDTO>();
-
-                //头
-                IC_TransferInDTO dtoHeader = new IC_TransferInDTO();
-                dtoHeader.TransInDocType = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
-                //dtoHeader.TransInDocType.Code = "TransIn002";//单据类型
-                dtoHeader.TransInDocType.Code = reqHeader.DocTypeCode;
-                //dtoHeader.TransferType = UFIDA.U9.InvDoc.Enums.TransferTypeEnum.BetweenWh;
-                dtoHeader.Org = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
-                dtoHeader.Org.Code = Context.LoginOrg.Code;
-                dtoHeader.BusinessDate = DateTime.Parse(reqHeader.BusinessDate);
-                dtoHeader.Memo = reqHeader.Remark;
-                dtoHeader.TransInLines = new List<IC_TransInLineDTO>();
-                dtoHeader.SysState = ObjectState.Inserted;
-                dtoHeader.DocNo = reqHeader.WmsDocNo;
-                dtoHeader.CreatedBy = Context.LoginUser;
-
-                foreach (var reqLine in reqHeader.TransferInLineLines)
                 {
-                    
+                    CommonCreateTransferInSV client = new CommonCreateTransferInSV();
+                    client.TransferInDTOList = new List<IC_TransferInDTO>();
+
+                    //头
+                    IC_TransferInDTO dtoHeader = new IC_TransferInDTO();
+                    dtoHeader.TransInDocType = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
+                    //dtoHeader.TransInDocType.Code = "TransIn002";//单据类型
+                    dtoHeader.TransInDocType.Code = reqHeader.DocTypeCode;
+                    //dtoHeader.TransferType = UFIDA.U9.InvDoc.Enums.TransferTypeEnum.BetweenWh;
+                    dtoHeader.Org = new UFIDA.U9.CBO.Pub.Controller.CommonArchiveDataDTO();
+                    dtoHeader.Org.Code = Context.LoginOrg.Code;
+                    dtoHeader.BusinessDate = DateTime.Parse(reqHeader.BusinessDate);
+                    dtoHeader.Memo = reqHeader.Remark;
+                    dtoHeader.TransInLines = new List<IC_TransInLineDTO>();
+                    dtoHeader.SysState = ObjectState.Inserted;
+                    dtoHeader.DocNo = reqHeader.WmsDocNo;
+                    dtoHeader.CreatedBy = Context.LoginUser;
+
+                    foreach (var reqLine in reqHeader.TransferInLineLines)
+                    {
+
                         //行
-                    IC_TransInLineDTO dtoLine = new IC_TransInLineDTO();
-                    dtoLine.ItemInfo = new UFIDA.U9.CBO.SCM.Item.ItemInfo();
-                    dtoLine.ItemInfo.ItemCode = reqLine.ItemCode;//料品                
-                    dtoLine.StoreUOMQty = reqLine.ItemQty;//调入数量
-                    dtoLine.CostUOMQty = reqLine.ItemQty;  //成本数量   
-                
-                    dtoLine.TransInWh = new CommonArchiveDataDTO();
-                    dtoLine.TransInWh.Code = reqLine.ToWHCode; ;//存储地点
-                    dtoLine.StorageType = UFIDA.U9.CBO.Enums.StorageTypeEnum.Useable;
-                    //Bom_line.LotInfo.LotMaster.EntityID = 1001007189629053;
-                    dtoLine.SysState = ObjectState.Inserted;
-                    dtoLine.TransInSubLines = new List<IC_TransInSubLineDTO>();
-                   
-                    //子行
-                    IC_TransInSubLineDTO dtoSubLine = new IC_TransInSubLineDTO();
-                    if (!string.IsNullOrEmpty(reqLine.ProjectCode))
-                    {
-                        debugInfo.AppendLine(reqLine.ProjectCode);
-                        Project project = Project.FindByCode(reqLine.ProjectCode);
-                        if (project == null)
-                        {
-                            return JsonUtil.GetFailResponse("project == null",debugInfo);
-                        }
-                        dtoLine.Project = new CommonArchiveDataDTO();
-                        dtoLine.Project.ID = project.ID;
+                        IC_TransInLineDTO dtoLine = new IC_TransInLineDTO();
+                        dtoLine.ItemInfo = new UFIDA.U9.CBO.SCM.Item.ItemInfo();
+                        dtoLine.ItemInfo.ItemCode = reqLine.ItemCode;//料品                
+                        dtoLine.StoreUOMQty = reqLine.ItemQty;//调入数量
+                        dtoLine.CostUOMQty = reqLine.ItemQty;  //成本数量   
 
-                        dtoSubLine.Project = new CommonArchiveDataDTO();
-                        dtoSubLine.Project.ID = project.ID;
+                        dtoLine.TransInWh = new CommonArchiveDataDTO();
+                        dtoLine.TransInWh.Code = reqLine.ToWHCode; ;//存储地点
+                        dtoLine.StorageType = UFIDA.U9.CBO.Enums.StorageTypeEnum.Useable;
+                        //Bom_line.LotInfo.LotMaster.EntityID = 1001007189629053;
+                        dtoLine.SysState = ObjectState.Inserted;
+                        dtoLine.TransInSubLines = new List<IC_TransInSubLineDTO>();
+
+                        //子行
+                        IC_TransInSubLineDTO dtoSubLine = new IC_TransInSubLineDTO();
+                        if (!string.IsNullOrEmpty(reqLine.ProjectCode))
+                        {
+                            debugInfo.AppendLine(reqLine.ProjectCode);
+                            Project project = Project.FindByCode(reqLine.ProjectCode);
+                            if (project == null)
+                            {
+                                return JsonUtil.GetFailResponse("project == null", debugInfo);
+                            }
+                            dtoLine.Project = new CommonArchiveDataDTO();
+                            dtoLine.Project.ID = project.ID;
+
+                            dtoSubLine.Project = new CommonArchiveDataDTO();
+                            dtoSubLine.Project.ID = project.ID;
+                        }
+                        if (!string.IsNullOrEmpty(reqLine.TaskCode))
+                        {
+                            dtoLine.Task = new CommonArchiveDataDTO();
+                            dtoLine.Task.Code = reqLine.TaskCode;
+
+                            dtoSubLine.Task = new CommonArchiveDataDTO();
+                            dtoSubLine.Task.Code = reqLine.TaskCode;
+                        }
+
+                        dtoSubLine.TransOutOrg = new CommonArchiveDataDTO();
+                        dtoSubLine.TransOutOrg.Code = reqLine.OutOrg;
+                        dtoSubLine.TransOutOwnerOrg = new CommonArchiveDataDTO();
+                        dtoSubLine.TransOutOwnerOrg.Code = reqLine.OutOrg;
+                        dtoSubLine.TransOutWh = new CommonArchiveDataDTO();
+                        dtoSubLine.TransOutWh.Code = reqLine.FromWHCode;
+
+                        //批号赋值
+                        if (!string.IsNullOrEmpty(reqLine.LotCode)
+                             && CommonUtil.IsNeedLot(reqLine.ItemCode, reqLine.OutOrg)
+                            )
+                        {
+                            //调出批号
+                            LotMaster lotOut = CommonUtil.GetLot(reqLine.LotCode, reqLine.ItemCode, reqLine.FromWHCode, LotSnStatusEnum.I_TransferOut.Value, false, reqLine.OutOrg);
+                            if (lotOut == null)
+                            {
+                                return JsonUtil.GetFailResponse(reqLine.LotCode + U9Contant.NoFindLot, debugInfo);
+                            }
+                            else
+                            {
+                                dtoSubLine.LotInfo = new UFIDA.U9.CBO.SCM.PropertyTypes.LotInfo();
+                                dtoSubLine.LotInfo.LotCode = reqLine.LotCode;
+                                dtoSubLine.LotInfo.LotMaster = new UFIDA.U9.Base.PropertyTypes.BizEntityKey();
+                                dtoSubLine.LotInfo.LotMaster.EntityID = lotOut.ID;
+                            }
+
+                            //调入批号
+                            LotMaster lotIn;
+                            if (Context.LoginOrg.Code.Equals(reqLine.OutOrg))
+                            {
+                                lotIn = lotOut;
+                            }
+                            else
+                            {
+                                lotIn = CommonUtil.GetLot(reqLine.LotCode, reqLine.ItemCode, reqLine.ToWHCode, LotSnStatusEnum.I_TransferIn.Value);
+                            }
+                            if (lotIn != null)
+                            {
+                                dtoLine.LotInfo = new UFIDA.U9.CBO.SCM.PropertyTypes.LotInfo();
+                                dtoLine.LotInfo.LotCode = reqLine.LotCode;
+                                dtoLine.LotInfo.LotMaster = new UFIDA.U9.Base.PropertyTypes.BizEntityKey();
+                                dtoLine.LotInfo.LotMaster.EntityID = lotIn.ID;
+                            }
+                        }
+                        dtoSubLine.SysState = ObjectState.Inserted;
+                        dtoSubLine.StorageType = dtoLine.StorageType;
+                        dtoLine.TransInSubLines.Add(dtoSubLine);//加载子行
+                        dtoHeader.TransInLines.Add(dtoLine);//加载行         
                     }
-                    if (!string.IsNullOrEmpty(reqLine.TaskCode))
+                    client.TransferInDTOList.Add(dtoHeader);
+                    List<CommonArchiveDataDTO> listRes = client.Do();
+                    if (listRes == null || listRes.Count == 0)
                     {
-                        dtoLine.Task = new CommonArchiveDataDTO();
-                        dtoLine.Task.Code = reqLine.TaskCode;
-
-                        dtoSubLine.Task = new CommonArchiveDataDTO();
-                        dtoSubLine.Task.Code = reqLine.TaskCode;
+                        return JsonUtil.GetFailResponse("listRes == null || listRes.Count == 0", debugInfo);
                     }
-
-                    dtoSubLine.TransOutOrg = new CommonArchiveDataDTO();
-                    dtoSubLine.TransOutOrg.Code = reqLine.OutOrg;
-                    dtoSubLine.TransOutOwnerOrg = new CommonArchiveDataDTO();
-                    dtoSubLine.TransOutOwnerOrg.Code = reqLine.OutOrg;
-                    dtoSubLine.TransOutWh = new CommonArchiveDataDTO();
-                    dtoSubLine.TransOutWh.Code = reqLine.FromWHCode;
-
-                    //批号赋值
-                    if (!string.IsNullOrEmpty(reqLine.LotCode)
-                         && CommonUtil.IsNeedLot(reqLine.ItemCode, reqLine.OutOrg)
-                        )
+                    CommonArchiveDataDTO curDto = listRes[0];
+                    using (UFSoft.UBF.Business.Session session = UFSoft.UBF.Business.Session.Open())
                     {
-                        //调出批号
-                        LotMaster lotOut = CommonUtil.GetLot(reqLine.LotCode, reqLine.ItemCode, reqLine.FromWHCode, LotSnStatusEnum.I_TransferOut.Value, false, reqLine.OutOrg);
-                        if (lotOut==null)
+                        UFIDA.U9.InvDoc.TransferIn.TransferIn doc = UFIDA.U9.InvDoc.TransferIn.TransferIn.Finder.Find(string.Format("Org={0} and DocNo='{1}'", Context.LoginOrg.ID, curDto.Code));
+                        if (doc == null)
                         {
-                            return JsonUtil.GetFailResponse(reqLine.LotCode+U9Contant.NoFindLot,debugInfo);
+                            return JsonUtil.GetFailResponse("transferIn == null", debugInfo);
                         }
-                        else
+                        doc.DocNo = reqHeader.WmsDocNo;
+                        doc.Memo = reqHeader.Remark;
+                        doc.BusinessDate = DateTime.Parse(reqHeader.BusinessDate);
+                        doc.SOBAccountPeriod = CommonUtil.GetSOBAccountPeriodEntity(doc.BusinessDate, Context.LoginOrg.ID);
+                        foreach (var current in doc.TransInAccountPeriods)
                         {
-                            dtoSubLine.LotInfo = new UFIDA.U9.CBO.SCM.PropertyTypes.LotInfo();
-                            dtoSubLine.LotInfo.LotCode = reqLine.LotCode;
-                            dtoSubLine.LotInfo.LotMaster = new UFIDA.U9.Base.PropertyTypes.BizEntityKey();
-                            dtoSubLine.LotInfo.LotMaster.EntityID = lotOut.ID;
+                            current.SOBAccountPeriod = doc.SOBAccountPeriod;
                         }
-
-                        //调入批号
-                        LotMaster lotIn;
-                        if (Context.LoginOrg.Code.Equals(reqLine.OutOrg))
+                        foreach (var transInLine in doc.TransInLines)
                         {
-                            lotIn = lotOut;
+                            transInLine.StorageType = UFIDA.U9.CBO.Enums.StorageTypeEnum.Useable;
+                            foreach (var transInSubLine in transInLine.TransInSubLines)
+                            {
+                                transInSubLine.SOBAccountPeriod = doc.SOBAccountPeriod;
+                                foreach (var transInAccountPeriod in transInSubLine.TransInAccountPeriods)
+                                {
+                                    transInAccountPeriod.SOBAccountPeriod = doc.SOBAccountPeriod;
+                                }
+                                foreach (var transInBin in transInSubLine.TransInBins)
+                                {
+                                    transInBin.TimeForPickOrTally = doc.BusinessDate;
+                                }
+                            }
+                            foreach (var transInBin in transInLine.TransInBins)
+                            {
+                                transInBin.TimeForPickOrTally = doc.BusinessDate;
+                            }
                         }
-                        else
-                        {
-                            lotIn = CommonUtil.GetLot(reqLine.LotCode, reqLine.ItemCode, reqLine.ToWHCode, LotSnStatusEnum.I_TransferIn.Value);
-                        }
-                        if (lotIn != null)
-                        {
-                            dtoLine.LotInfo = new UFIDA.U9.CBO.SCM.PropertyTypes.LotInfo();
-                            dtoLine.LotInfo.LotCode = reqLine.LotCode;
-                            dtoLine.LotInfo.LotMaster = new UFIDA.U9.Base.PropertyTypes.BizEntityKey();
-                            dtoLine.LotInfo.LotMaster.EntityID = lotIn.ID;
-                        }
+                        doc.Status = UFIDA.U9.InvDoc.TransferIn.TransInStatus.Approving;
+                        doc.CurrAction = UFIDA.U9.InvDoc.TransferIn.TransferInActionEnum.UIUpdate;
+                        session.Commit();
                     }
-                    dtoSubLine.SysState = ObjectState.Inserted;
-                    dtoSubLine.StorageType = dtoLine.StorageType;
-                    dtoLine.TransInSubLines.Add(dtoSubLine);//加载子行
-                    dtoHeader.TransInLines.Add(dtoLine);//加载行         
-                }
-                client.TransferInDTOList.Add(dtoHeader);
-                List<CommonArchiveDataDTO> listRes = client.Do();
-                if (listRes == null || listRes.Count == 0)
-                {
-                    return JsonUtil.GetFailResponse("listRes == null || listRes.Count == 0", debugInfo);
-                }
-                UFIDA.U9.InvDoc.TransferIn.TransferIn transferIn = UFIDA.U9.InvDoc.TransferIn.TransferIn.Finder.Find(string.Format("Org={0} and DocNo='{1}'", Context.LoginOrg.ID, listRes[0].Code));
-                if (transferIn == null)
-                {
-                    return JsonUtil.GetFailResponse("transferIn == null",debugInfo);
-                }
-                using (ISession session = Session.Open())
-                {
-                    transferIn.DocNo = reqHeader.WmsDocNo;
-                    transferIn.Memo = reqHeader.Remark;
-                    transferIn.BusinessDate = DateTime.Parse(reqHeader.BusinessDate);
-
-                    session.Commit();
-                }
-                //CommonArchiveDataDTO curDto = listRes[0];
-                if (reqHeader.IsAutoApprove)
-                {
-                    U9Api.CustSV.ApproveTransferInCustSV sv2 = new
-                      ApproveTransferInCustSV();
-                    CommonApproveRequest req = new CommonApproveRequest();
-                    req.DocNo = transferIn.DocNo;
-                    req.BusinessDate = reqHeader.BusinessDate;
-                    sv2.JsonRequest = JsonUtil.GetJsonString(req);
+                    //CommonArchiveDataDTO curDto = listRes[0];
+                    if (reqHeader.IsAutoApprove)
+                    {
+                        U9Api.CustSV.ApproveTransferInCustSV sv2 = new
+                          ApproveTransferInCustSV();
+                        CommonApproveRequest req = new CommonApproveRequest();
+                        req.DocNo = curDto.Code;
+                        req.BusinessDate = reqHeader.BusinessDate;
+                        sv2.JsonRequest = JsonUtil.GetJsonString(req);
                         res.Clear();
                         res.Append(sv2.Do());
                         scope.Commit();
@@ -210,8 +237,8 @@
                     }
 
                     scope.Commit();
-                    return JsonUtil.GetSuccessResponse(transferIn.DocNo, "", debugInfo);
-            }
+                    return JsonUtil.GetSuccessResponse(curDto.Code, "", debugInfo);
+                }
                 catch (Exception ex)
                 {
                     LogUtil.WriteDebugInfoLog(debugInfo.ToString());
