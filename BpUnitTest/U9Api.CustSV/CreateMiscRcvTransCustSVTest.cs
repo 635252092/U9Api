@@ -1,0 +1,32 @@
+﻿
+
+namespace U9Api.CustSV
+{
+	using System;
+	using System.Collections.Generic;
+	using System.Text;
+	using System.IO;
+	using NUnit.Framework;
+	
+	/// <summary>
+	/// Business operation test
+	/// </summary> 
+	[TestFixture]		
+	public class CreateMiscRcvTransCustSVTest
+	{
+		private Proxy.CreateMiscRcvTransCustSVProxy obj = new Proxy.CreateMiscRcvTransCustSVProxy();
+
+		public CreateMiscRcvTransCustSVTest()
+		{
+		}
+		#region AutoTestCode ...
+		[Test]
+		public void TestDo()
+		{
+			obj.Do() ;  
+		
+		}
+		#endregion 				
+	}
+	
+}

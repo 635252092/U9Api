@@ -1,0 +1,520 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    
+	<Compile Include="U9Api.CustSV\PullShipSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\PullShipWithLotSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\PullShipBatchSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateRMRSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\ToRMRSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateRcvFromRMRSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\ShipApproveSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateRcvFromPOSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\RcvApproveSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateRcvRptDocCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateLotSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\RcvRptDocApproveSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateMaterialDeliveryDocSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\ApproveMaterialDeliveryDocSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateMaterialInSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateTransferOutCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateTransferInCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateMiscRcvTransCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateMiscShipCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\ApproveTransferOutCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\ApproveTransferInCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\ApproveMaterialInSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\ApproveMiscShipCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\ApproveMiscRcvTransCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\RMAPullShipCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateTransferInTwoStepCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\CreateRcvFromRtnSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\DeleteCustSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\UnApproveRcvSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\UnApproveShipSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\UnApproveTransferOutSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+    
+	<Compile Include="U9Api.CustSV\UpdateTransferOutSVTest.cs" > 
+	    <Inproject>true</Inproject>
+	</Compile>
+
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="UBF.System, Version=1.0.0.1, Culture=neutral, PublicKeyToken=aed5b8b71060d80b, processorArchitecture=MSIL">
+        <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\UBF.System.dll</HintPath>
+        <SpecificVersion>False</SpecificVersion>
+        <Private>False</Private>
+   </Reference>
+    <Reference Include="UFSoft.UBF.Util.Data, Version=2.0.0.1, Culture=neutral, PublicKeyToken=aed5b8b71060d80b, processorArchitecture=MSIL">
+      <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\UFSoft.UBF.Util.Data.dll</HintPath>      
+      <SpecificVersion>False</SpecificVersion>
+       <Private>False</Private>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Business, Version=2.0.0.1, Culture=neutral, PublicKeyToken=aed5b8b71060d80b, processorArchitecture=MSIL">
+      <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\UFSoft.UBF.Business.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+       <Private>False</Private>
+   </Reference>
+    <Reference Include="UFSoft.UBF.PL, Version=2.0.0.1, Culture=neutral, PublicKeyToken=aed5b8b71060d80b, processorArchitecture=MSIL">
+      <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\UFSoft.UBF.PL.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+       <Private>False</Private>
+    </Reference>
+    <Reference Include="UFSoft.UBF.View.Query.dll, Version=2.0.0.1, Culture=neutral, PublicKeyToken=aed5b8b71060d80b, processorArchitecture=MSIL">
+      <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\UFSoft.UBF.View.Query.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+<Reference Include="UFSoft.UBF.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\UFSoft.UBF.Service.dll</HintPath>
+       <Private>False</Private>
+    </Reference>
+    <Reference Include="UFSoft.UBF.Execution, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\UFSoft.UBF.Execution.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+       <Private>False</Private>
+    </Reference> 
+    <Reference Include="UFSoft.UBF.AopFrame, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\UFSoft.UBF.AopFrame.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+        <Private>False</Private>
+   </Reference> 
+  <Reference Include="UBFEngineHosting, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aed5b8b71060d80b, processorArchitecture=MSIL">
+    <SpecificVersion>False</SpecificVersion>
+    <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\UBFEngineHosting.dll</HintPath>
+    <Private>False</Private>
+  </Reference>
+    <Reference Include="nunit.core, Version=2.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\nunit.core.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.UBF\UBFStudio\Runtime\\nunit.framework.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+
+    <Reference Include="UFIDA.U9.CS.Base.BaseBP"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\CS\\UFIDA.U9.CS.Base.BaseBP.dll</HintPath>
+        <Name>UFIDA.U9.CS.Base.BaseBP</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.CS.Base.BaseBP.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\CS\\UFIDA.U9.CS.Base.BaseBP.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.CS.Base.BaseBP.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.SM.SMBP"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.SM.SMBP.dll</HintPath>
+        <Name>UFIDA.U9.SM.SMBP</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.SM.SMBP.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.SM.SMBP.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.SM.SMBP.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.SM.SMBE"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.SM.SMBE.dll</HintPath>
+        <Name>UFIDA.U9.SM.SMBE</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.SM.SMBE.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.SM.SMBE.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.SM.SMBE.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.Base.BaseBE"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\UBF\\UFIDA.U9.Base.BaseBE.dll</HintPath>
+        <Name>UFIDA.U9.Base.BaseBE</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.Base.BaseBE.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\UBF\\UFIDA.U9.Base.BaseBE.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.Base.BaseBE.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.CBO.PubBE"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.CBO.PubBE.dll</HintPath>
+        <Name>UFIDA.U9.CBO.PubBE</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.PubBE.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.CBO.PubBE.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.CBO.PubBE.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.ISV.SM.SDIndustryChainSV"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.SM.SDIndustryChainSV.dll</HintPath>
+        <Name>UFIDA.U9.ISV.SM.SDIndustryChainSV</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.ISV.SM.SDIndustryChainSV.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.SM.SDIndustryChainSV.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.ISV.SM.SDIndustryChainSV.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.Lot.LotBE"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.Lot.LotBE.dll</HintPath>
+        <Name>UFIDA.U9.Lot.LotBE</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.Lot.LotBE.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.Lot.LotBE.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.Lot.LotBE.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.SM.SMSV"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.SM.SMSV.dll</HintPath>
+        <Name>UFIDA.U9.SM.SMSV</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.SM.SMSV.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.SM.SMSV.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.SM.SMSV.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.CBO.SCMBE"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.CBO.SCMBE.dll</HintPath>
+        <Name>UFIDA.U9.CBO.SCMBE</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.SCMBE.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.CBO.SCMBE.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.CBO.SCMBE.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.PM.PMBP"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.PM.PMBP.dll</HintPath>
+        <Name>UFIDA.U9.PM.PMBP</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.PM.PMBP.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.PM.PMBP.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.PM.PMBP.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.PM.PMBE"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.PM.PMBE.dll</HintPath>
+        <Name>UFIDA.U9.PM.PMBE</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.PM.PMBE.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.PM.PMBE.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.PM.PMBE.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.CA.CABP"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.CA.CABP.dll</HintPath>
+        <Name>UFIDA.U9.CA.CABP</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.CA.CABP.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.CA.CABP.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.CA.CABP.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.PM.PMSV"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.PM.PMSV.dll</HintPath>
+        <Name>UFIDA.U9.PM.PMSV</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.PM.PMSV.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.PM.PMSV.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.PM.PMSV.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.MO.MOBP"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.MO.MOBP.dll</HintPath>
+        <Name>UFIDA.U9.MO.MOBP</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.MO.MOBP.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.MO.MOBP.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.MO.MOBP.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.MO.MOBE"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.MO.MOBE.dll</HintPath>
+        <Name>UFIDA.U9.MO.MOBE</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.MO.MOBE.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.MO.MOBE.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.MO.MOBE.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.Complete.CompleteBE"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.Complete.CompleteBE.dll</HintPath>
+        <Name>UFIDA.U9.Complete.CompleteBE</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.Complete.CompleteBE.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.Complete.CompleteBE.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.Complete.CompleteBE.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.CBO.PubBP"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.CBO.PubBP.dll</HintPath>
+        <Name>UFIDA.U9.CBO.PubBP</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.PubBP.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.CBO.PubBP.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.CBO.PubBP.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.CBO.PubSV"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.CBO.PubSV.dll</HintPath>
+        <Name>UFIDA.U9.CBO.PubSV</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.CBO.PubSV.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.CBO.PubSV.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.CBO.PubSV.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.MFG.MSBE"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.MFG.MSBE.dll</HintPath>
+        <Name>UFIDA.U9.MFG.MSBE</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.MFG.MSBE.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.MFG.MSBE.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.MFG.MSBE.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.MFG.MSBP"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.MFG.MSBP.dll</HintPath>
+        <Name>UFIDA.U9.MFG.MSBP</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.MFG.MSBP.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.MFG.MSBP.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.MFG.MSBP.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.ISV.CBO.PubSV"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.CBO.PubSV.dll</HintPath>
+        <Name>UFIDA.U9.ISV.CBO.PubSV</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.ISV.CBO.PubSV.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.CBO.PubSV.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.ISV.CBO.PubSV.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.ISV.TransferOutISV"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.TransferOutISV.dll</HintPath>
+        <Name>UFIDA.U9.ISV.TransferOutISV</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.ISV.TransferOutISV.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.TransferOutISV.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.ISV.TransferOutISV.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.ISV.TransferInISV"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.TransferInISV.dll</HintPath>
+        <Name>UFIDA.U9.ISV.TransferInISV</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.ISV.TransferInISV.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.TransferInISV.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.ISV.TransferInISV.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.InvDoc.InvDocBE"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.InvDoc.InvDocBE.dll</HintPath>
+        <Name>UFIDA.U9.InvDoc.InvDocBE</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvDoc.InvDocBE.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.InvDoc.InvDocBE.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.InvDoc.InvDocBE.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.InvDoc.InvDocBP"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.InvDoc.InvDocBP.dll</HintPath>
+        <Name>UFIDA.U9.InvDoc.InvDocBP</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.InvDoc.InvDocBP.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.InvDoc.InvDocBP.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.InvDoc.InvDocBP.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.ISV.MiscRcvISV"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.MiscRcvISV.dll</HintPath>
+        <Name>UFIDA.U9.ISV.MiscRcvISV</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.ISV.MiscRcvISV.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.MiscRcvISV.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.ISV.MiscRcvISV.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.ISV.MiscShipISV"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.MiscShipISV.dll</HintPath>
+        <Name>UFIDA.U9.ISV.MiscShipISV</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.ISV.MiscShipISV.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.ISV.MiscShipISV.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.ISV.MiscShipISV.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+    <Reference Include="UFIDA.U9.Lot.LotSV"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.Lot.LotSV.dll</HintPath>
+        <Name>UFIDA.U9.Lot.LotSV</Name>      
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="UFIDA.U9.Lot.LotSV.Deploy"	>
+	<HintPath>.\..\..\..\..\..\..\..\yonyou\UBFV50\U9.VOB.Product.Component\\App\\UFIDA.U9.Lot.LotSV.Deploy.dll</HintPath>
+      <Name>UFIDA.U9.Lot.LotSV.Deploy</Name>     
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Deploy\U9Api.CustSV.Deploy.csproj">
+      <Project>{75F2BB61-0FFD-402F-B2F9-5CAF0F818FAA}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+      <Name>U9Api.CustSV.Deploy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BpImplement\U9Api.CustSV.csproj">
+      <Project>{9287D990-157F-4D55-8666-049ED3732C82}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+      <Name>U9Api.CustSV</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BpAgent\U9Api.CustSV.Agent.csproj">
+      <Project>{9831A3A0-7093-447B-86CD-85EC632492B1}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+      <Name>U9Api.CustSV.Agent</Name>
+    </ProjectReference>
+
+  </ItemGroup>
+</Project>

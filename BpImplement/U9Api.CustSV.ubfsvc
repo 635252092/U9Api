@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <system.serviceModel>
+    <services>
+   
+	<service name="U9Api.CustSV.PullShipSVStub">
+        <endpoint contract="U9Api.CustSV.IPullShipSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.PullShipWithLotSVStub">
+        <endpoint contract="U9Api.CustSV.IPullShipWithLotSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.PullShipBatchSVStub">
+        <endpoint contract="U9Api.CustSV.IPullShipBatchSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateRMRSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateRMRSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.ToRMRSVStub">
+        <endpoint contract="U9Api.CustSV.IToRMRSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateRcvFromRMRSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateRcvFromRMRSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.ShipApproveSVStub">
+        <endpoint contract="U9Api.CustSV.IShipApproveSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateRcvFromPOSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateRcvFromPOSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.RcvApproveSVStub">
+        <endpoint contract="U9Api.CustSV.IRcvApproveSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateRcvRptDocCustSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateRcvRptDocCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateLotSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateLotSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.RcvRptDocApproveSVStub">
+        <endpoint contract="U9Api.CustSV.IRcvRptDocApproveSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateMaterialDeliveryDocSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateMaterialDeliveryDocSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.ApproveMaterialDeliveryDocSVStub">
+        <endpoint contract="U9Api.CustSV.IApproveMaterialDeliveryDocSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateMaterialInSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateMaterialInSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateTransferOutCustSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateTransferOutCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateTransferInCustSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateTransferInCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateMiscRcvTransCustSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateMiscRcvTransCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateMiscShipCustSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateMiscShipCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.ApproveTransferOutCustSVStub">
+        <endpoint contract="U9Api.CustSV.IApproveTransferOutCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.ApproveTransferInCustSVStub">
+        <endpoint contract="U9Api.CustSV.IApproveTransferInCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.ApproveMaterialInSVStub">
+        <endpoint contract="U9Api.CustSV.IApproveMaterialInSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.ApproveMiscShipCustSVStub">
+        <endpoint contract="U9Api.CustSV.IApproveMiscShipCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.ApproveMiscRcvTransCustSVStub">
+        <endpoint contract="U9Api.CustSV.IApproveMiscRcvTransCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.RMAPullShipCustSVStub">
+        <endpoint contract="U9Api.CustSV.IRMAPullShipCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateTransferInTwoStepCustSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateTransferInTwoStepCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.CreateRcvFromRtnSVStub">
+        <endpoint contract="U9Api.CustSV.ICreateRcvFromRtnSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.DeleteCustSVStub">
+        <endpoint contract="U9Api.CustSV.IDeleteCustSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.UnApproveRcvSVStub">
+        <endpoint contract="U9Api.CustSV.IUnApproveRcvSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.UnApproveShipSVStub">
+        <endpoint contract="U9Api.CustSV.IUnApproveShipSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.UnApproveTransferOutSVStub">
+        <endpoint contract="U9Api.CustSV.IUnApproveTransferOutSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+   
+	<service name="U9Api.CustSV.UpdateTransferOutSVStub">
+        <endpoint contract="U9Api.CustSV.IUpdateTransferOutSV"
+                  binding="basicHttpBinding" />
+
+	</service>
+ 
+    </services>
+</system.serviceModel>
+</configuration>
