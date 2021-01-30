@@ -52,10 +52,14 @@
             try
             {
                 reqHeader = JsonUtil.GetJsonObject<CreateRcvFromRMRRequest>(bpObj.JsonRequest);
+                if (reqHeader == null)
+                {
+                    throw new Exception("request == null");
+                }
             }
             catch (Exception ex)
             {
-                return JsonUtil.GetFailResponse("JSON格式错误");
+                return JsonUtil.GetFailResponse("JSON格式错误;" + ex.Message);
             }
             StringBuilder res = new StringBuilder();
             StringBuilder debugInfo = new StringBuilder();
@@ -111,7 +115,7 @@
 
                     if (listRMRLineAndQtyDTO == null || listRMRLineAndQtyDTO.Count == 0)
                     {
-                        return JsonUtil.GetFailResponse("没有找到对应的【退回申请单子行】，请检查入参;" + errorInfo.ToString(), debugInfo);
+                        return JsonUtil.GetFailResponse("没有找到对应的【退回申请单子行】，请检查订单行;" + errorInfo.ToString(), debugInfo);
                     }
                     UFIDA.U9.SM.RMR.GetRcvDTOsByRMR getRcvDTOsByRMRProxy = new UFIDA.U9.SM.RMR.GetRcvDTOsByRMR();
                     getRcvDTOsByRMRProxy.RMRLineAndQtys = listRMRLineAndQtyDTO;

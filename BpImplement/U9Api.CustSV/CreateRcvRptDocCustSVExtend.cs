@@ -49,10 +49,14 @@
             try
             {
                 reqHeader = JsonUtil.GetJsonObject<CreateRcvRptDocRequest>(bpObj.JsonRequest);
+                if (reqHeader == null)
+                {
+                    throw new Exception("request == null");
+                }
             }
             catch (Exception ex)
             {
-                return JsonUtil.GetFailResponse("JSON格式错误");
+                return JsonUtil.GetFailResponse("JSON格式错误;" + ex.Message);
             }
             string res = string.Empty;
             StringBuilder debugInfo = new StringBuilder();
@@ -103,7 +107,7 @@
                     }
                     if (listMOInfoDTO == null || listMOInfoDTO.Count == 0)
                     {
-                        return JsonUtil.GetFailResponse("listMOInfoDTO == null || listMOInfoDTO.Count == 0;"+ errorInfo.ToString(), debugInfo);
+                        return JsonUtil.GetFailResponse("请检查订单;" + errorInfo.ToString(), debugInfo);
                     }
                     proxy.MOInfoDTO = listMOInfoDTO;
                     RcvRptResultDTO rcvRptResultDTO = proxy.Do();

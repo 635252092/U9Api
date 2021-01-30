@@ -65,7 +65,22 @@
             {
                 return JsonUtil.GetFailResponse("string.IsNullOrEmpty(bpObj.JsonRequest)");
             }
-            PullShipBatchRequest reqHeader = JsonUtil.GetJsonObject<PullShipBatchRequest>(bpObj.JsonRequest);
+            //PullShipBatchRequest reqHeader = JsonUtil.GetJsonObject<PullShipBatchRequest>(bpObj.JsonRequest);
+
+            PullShipBatchRequest reqHeader = null;
+            try
+            {
+                reqHeader = JsonUtil.GetJsonObject<PullShipBatchRequest>(bpObj.JsonRequest);
+                if (reqHeader == null)
+                {
+                    throw new Exception("request == null");
+                }
+            }
+            catch (Exception ex)
+            {
+                return JsonUtil.GetFailResponse("JSON格式错误;" + ex.Message);
+            }
+
             StringBuilder res = new StringBuilder();
             StringBuilder debugInfo = new StringBuilder();
             debugInfo.AppendLine("strat...");
@@ -128,7 +143,7 @@
 
                 if (list2 == null || list2.Count == 0)
                 {
-                    return JsonUtil.GetFailResponse("list2 == null || list2.Count == 0", debugInfo);
+                    return JsonUtil.GetFailResponse("没有待发货行，请检查订单", debugInfo);
                 }
                 sMPullSOProxy.SOSubLines = list2;
                 sMPullSOProxy.IsConsign = IsConsign;

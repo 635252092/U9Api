@@ -48,10 +48,14 @@
 			try
 			{
 				reqHeader = JsonUtil.GetJsonObject<DeleteCustRequest>(bpObj.JsonRequest);
+				if (reqHeader == null)
+				{
+					throw new Exception("request == null");
+				}
 			}
 			catch (Exception ex)
 			{
-				return JsonUtil.GetFailResponse("JSON格式错误");
+				return JsonUtil.GetFailResponse("JSON格式错误;" + ex.Message);
 			}
 			StringBuilder res = new StringBuilder();
 			StringBuilder debugInfo = new StringBuilder();

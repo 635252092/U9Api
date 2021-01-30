@@ -46,19 +46,23 @@
 			try
 			{
 				reqHeader = JsonUtil.GetJsonObject<CreateTransferInTwoStepRequest>(bpObj.JsonRequest);
+				if (reqHeader == null)
+				{
+					throw new Exception("request == null");
+				}
 			}
 			catch (Exception ex)
 			{
-				return JsonUtil.GetFailResponse("JSON格式错误");
+				return JsonUtil.GetFailResponse("JSON格式错误;"+ ex.Message);
 			}
 			StringBuilder res = new StringBuilder();
 			StringBuilder debugInfo = new StringBuilder();
 			debugInfo.AppendLine("strat...");
-			debugInfo.AppendLine(JsonUtil.GetJsonString(Context.LoginOrg == null ? "organization==null" : "organization ok" + Context.LoginOrg.ID));
+			debugInfo.AppendLine(JsonUtil.GetJsonString(Context.LoginOrg == null ? "Context.LoginOrg==null" : "Context.LoginOrg ok" + Context.LoginOrg.ID));
 
 			UFIDA.U9.Base.Organization.Organization organization = UFIDA.U9.Base.Organization.Organization.FindByCode(reqHeader.OutOrg);
 			if (organization == null)
-				return JsonUtil.GetFailResponse("organization == null",debugInfo);
+				return JsonUtil.GetFailResponse(reqHeader.OutOrg+U9Contant.NoFindOrg, debugInfo);
 			using (UFSoft.UBF.Transactions.UBFTransactionScope scope = new UFSoft.UBF.Transactions.UBFTransactionScope(UFSoft.UBF.Transactions.TransactionOption.RequiresNew))
 			{
 				try

@@ -11,7 +11,7 @@ namespace U9Api.CustSV.Base
        public static string Fail_CODE = "-1";
        public static string CUST_SUCCESS_MSG = "CustSV执行成功";
        //public static string CUST_FAIL_MSG = "CustSV执行成功";
-       public static bool IS_TEST = true;
+       public static bool IS_TEST = false;
         public static string LotEntityType = "UFIDA.U9.Lot.LotMaster";
 
         public static string NoFindDoc = "：没有找到订单";

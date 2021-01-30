@@ -21,7 +21,16 @@ namespace U9Api.CustSV.Base
 
             Exception res = ex.InnerException ?? ex;
             LogUtil.WriteExceptionLog(res.ToString());
-            return res.Message;
+            string msg = res.Message;
+            if (!string.IsNullOrEmpty(msg))
+            {
+                if (msg.Contains("。 <a href=\"#\""))
+                {
+                    msg = msg.Substring(0, msg.IndexOf("。 <a href=\"#\""));
+                }
+                msg.Trim();
+            }
+            return msg;
         }
         public static Exception GetException(string msg, StringBuilder sb=null)
         {

@@ -52,10 +52,14 @@
             try
             {
                 reqHeader = JsonUtil.GetJsonObject<CreateRcvFromRtnRequest>(bpObj.JsonRequest);
+                if (reqHeader == null)
+                {
+                    throw new Exception("request == null");
+                }
             }
             catch (Exception ex)
             {
-                return JsonUtil.GetFailResponse("JSON格式错误");
+                return JsonUtil.GetFailResponse("JSON格式错误;" + ex.Message);
             }
             StringBuilder res = new StringBuilder();
             StringBuilder debugInfo = new StringBuilder();
@@ -121,7 +125,7 @@
                 }
                 if (listRtnToRcvDTO == null || listRtnToRcvDTO.Count == 0)
                 {
-                    return JsonUtil.GetFailResponse("listRtnToRcvDTO == null || listRtnToRcvDTO.Count == 0;"+ errorInfo.ToString(), debugInfo);
+                    return JsonUtil.GetFailResponse("请检查订单行;" + errorInfo.ToString(), debugInfo);
                 }
                 sv1.RtnToRcvDTOs = listRtnToRcvDTO;
                 //pOToRcvSVProxy.RcvDocType = UFIDA.U9.PM.Pub.RcvDocType.FindByCode( Context.LoginOrg,reqHeader.RcvDocType).Key;

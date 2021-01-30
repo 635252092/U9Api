@@ -16,6 +16,7 @@
     using UFSoft.UBF.Business;
     using System.Linq;
     using UFIDA.U9.CBO.Enums;
+    using U9Api.CustSV.Base;
 
     /// <summary>
     /// CreateMaterialDeliveryDocSV partial 
@@ -49,10 +50,14 @@
             try
             {
                 reqHeader = JsonUtil.GetJsonObject<CreateMaterialDeliveryDocRequest>(bpObj.JsonRequest);
+                if (reqHeader == null)
+                {
+                    throw new Exception("request == null");
+                }
             }
             catch (Exception ex)
             {
-                return JsonUtil.GetFailResponse("JSON格式错误");
+                return JsonUtil.GetFailResponse("JSON格式错误;" + ex.Message);
             }
             string res = "";
             StringBuilder debugInfo = new StringBuilder();
@@ -92,7 +97,7 @@
                     UFIDA.U9.Issue.MaterialDeliveryDocTypeBE.MaterialDeliveryDocType docType = UFIDA.U9.Issue.MaterialDeliveryDocTypeBE.MaterialDeliveryDocType.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, "1"));
                     if (docType == null)
                     {
-                        return JsonUtil.GetFailResponse("docType == null", debugInfo);
+                        return JsonUtil.GetFailResponse("MaterialDeliveryDocType" + U9Contant.NoFindDocType, debugInfo);
                     }
                     drawMaterialOutAndInProxy.MaterialDeliveryDocType = docType.Key;
                     drawMaterialOutAndInProxy.BatchMaterialOutDTOList = new List<MaterialInfo>();

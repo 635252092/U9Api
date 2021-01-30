@@ -50,7 +50,9 @@ namespace U9Api.CustSV.Utils
         public static string GetSuccessResponse(string u9Msg, StringBuilder debugInfo)
         {
             if (U9Contant.IS_TEST)
-            { return GetJsonResponse(U9Contant.SUCCESS_CODE, U9Contant.CUST_SUCCESS_MSG, u9Msg, debugInfo); }
+            { 
+                return GetJsonResponse(U9Contant.SUCCESS_CODE, U9Contant.CUST_SUCCESS_MSG, u9Msg, debugInfo); 
+            }
             else
             {
                 return GetSuccessResponse(u9Msg);
