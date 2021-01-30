@@ -205,6 +205,7 @@
                         CommonApproveRequest req = new CommonApproveRequest();
                         req.DocNo = doc.DocNo;
                         sv3.JsonRequest = JsonUtil.GetJsonString(req);
+                        res.Clear();
                         res.Append(sv3.Do());
                         scope.Commit();
                         return res.ToString();

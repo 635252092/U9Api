@@ -191,6 +191,7 @@ where header.Org = {0} AND header.DocNo = '{1}'", Context.LoginOrg.ID, curDto.Co
 						CommonApproveRequest req = new CommonApproveRequest();
 						req.DocNo = curDto.Code;
 						sv2.JsonRequest = JsonUtil.GetJsonString(req);
+						res.Clear();
 						res.Append(sv2.Do());
 						scope.Commit();
 						return res.ToString();

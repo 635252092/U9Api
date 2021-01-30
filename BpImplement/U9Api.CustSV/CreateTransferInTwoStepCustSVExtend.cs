@@ -161,6 +161,7 @@
 					req.DocNo = doc.DocNo;
 					req.BusinessDate = reqHeader.BusinessDate;
 					sv3.JsonRequest = JsonUtil.GetJsonString(req);
+						res.Clear();
 						res.Append(sv3.Do());
 						scope.Commit();
 						return res.ToString();

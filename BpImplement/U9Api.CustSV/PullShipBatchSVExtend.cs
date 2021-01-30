@@ -198,6 +198,7 @@
                         shipApproveRequest.DocNo = ship.DocNo;
                         shipApproveRequest.OrgID = ship.Org.ID;
                         sv2.JsonRequest = JsonUtil.GetJsonString(shipApproveRequest);
+                            res.Clear();
                             res.Append(sv2.Do());
                             scope.Commit();
                             return res.ToString();

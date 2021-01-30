@@ -199,6 +199,7 @@
                     req.DocNo = transferIn.DocNo;
                     req.BusinessDate = reqHeader.BusinessDate;
                     sv2.JsonRequest = JsonUtil.GetJsonString(req);
+                        res.Clear();
                         res.Append(sv2.Do());
                         scope.Commit();
                         return res.ToString();

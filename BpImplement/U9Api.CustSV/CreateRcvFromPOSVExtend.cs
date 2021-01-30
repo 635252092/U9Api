@@ -221,6 +221,7 @@
                         RcvApproveRequest shipApproveRequest = new RcvApproveRequest();
                         shipApproveRequest.DocNo = receivement.DocNo;
                         sv2.JsonRequest = JsonUtil.GetJsonString(shipApproveRequest);
+                            res.Clear();
                             res.Append(sv2.Do());
                             scope.Commit();
                             return res.ToString();
