@@ -23,7 +23,7 @@
 			return new ApproveMaterialDeliveryDocSVImpementStrategy();	
 		}		
 	}
-	
+
 	#region  implement strategy	
 	/// <summary>
 	/// Impement Implement
@@ -34,7 +34,7 @@
 		public ApproveMaterialDeliveryDocSVImpementStrategy() { }
 
 		public override object Do(object obj)
-		{						
+		{
 			ApproveMaterialDeliveryDocSV bpObj = (ApproveMaterialDeliveryDocSV)obj;
 			if (string.IsNullOrEmpty(bpObj.JsonRequest))
 			{
@@ -60,32 +60,35 @@
 			{
 				throw Base.U9Exception.GetException(reqHeader.DocNo + U9Contant.NoFindDoc, debugInfo);
 			}
-			int invokeCount = 1;
-			if (materialDeliveryDoc.DocState == UFIDA.U9.IssueNew.Enums.DocStateEnum.Opened)
+			if (materialDeliveryDoc.DocState != UFIDA.U9.IssueNew.Enums.DocStateEnum.Approved)
 			{
-				invokeCount = 2;
-			}
-			UFIDA.U9.ISV.MO.MaterialDeliveryDocApproveSV proxy = new UFIDA.U9.ISV.MO.MaterialDeliveryDocApproveSV();
-			for (int i = 0; i < invokeCount; i++)
-			{
-				proxy.IsAutoApp = true;
-				proxy.CurrentSysVersion = materialDeliveryDoc.SysVersion;
-				proxy.MaterialDeliveryID = materialDeliveryDoc.ID;
-				try
+				int invokeCount = 1;
+				if (materialDeliveryDoc.DocState == UFIDA.U9.IssueNew.Enums.DocStateEnum.Opened)
 				{
-					proxy.Do();
+					invokeCount = 2;
 				}
-				catch (Exception ex)
+				UFIDA.U9.ISV.MO.MaterialDeliveryDocApproveSV proxy = new UFIDA.U9.ISV.MO.MaterialDeliveryDocApproveSV();
+				for (int i = 0; i < invokeCount; i++)
 				{
-					LogUtil.WriteDebugInfoLog(debugInfo.ToString());
-					throw U9Exception.GetInnerException(ex);
+					proxy.IsAutoApp = true;
+					proxy.CurrentSysVersion = materialDeliveryDoc.SysVersion;
+					proxy.MaterialDeliveryID = materialDeliveryDoc.ID;
+					try
+					{
+						proxy.Do();
+					}
+					catch (Exception ex)
+					{
+						LogUtil.WriteDebugInfoLog(debugInfo.ToString());
+						throw U9Exception.GetInnerException(ex);
+					}
 				}
 			}
 			CommonApproveResponse response = new CommonApproveResponse();
 			response.DocNo = materialDeliveryDoc.DocNo;
 			response.CurrentStatus = materialDeliveryDoc.DocState.Name;
 			return JsonUtil.GetSuccessResponse(response, debugInfo);
-		}		
+		}
 	}
 
 	#endregion

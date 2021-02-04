@@ -63,7 +63,24 @@
             StringBuilder debugInfo = new StringBuilder();
             debugInfo.AppendLine("strat...");
             debugInfo.AppendLine(JsonUtil.GetJsonString(Context.LoginOrg == null ? "Context.LoginOrg==null" : "Context.LoginOrg ok" + Context.LoginOrg.ID));
-
+            UFIDA.U9.Issue.MaterialDeliveryDocTypeBE.MaterialDeliveryDocType docType = UFIDA.U9.Issue.MaterialDeliveryDocTypeBE.MaterialDeliveryDocType.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, reqHeader.DocTypeCode));
+            if (docType == null)
+            {
+                return JsonUtil.GetFailResponse("MaterialDeliveryDocType" + U9Contant.NoFindDocType, debugInfo);
+            }
+            if (docType.ConfirmType != UFIDA.U9.Base.Doc.ConfirmTypeEnum.ComfirmWork)
+            {
+                return JsonUtil.GetFailResponse("请修改单据类型的确认方式为【确认作业】");
+            }
+            //UFIDA.U9.Base.Doc.ConfirmTypeEnum beginConfirmType = docType.ConfirmType;
+            //if (beginConfirmType != UFIDA.U9.Base.Doc.ConfirmTypeEnum.ComfirmWork)
+            //{
+            //    using (ISession session = Session.Open())
+            //    {
+            //        docType.ConfirmType = UFIDA.U9.Base.Doc.ConfirmTypeEnum.ComfirmWork;
+            //        session.Commit();
+            //    }
+            //}
             using (UFSoft.UBF.Transactions.UBFTransactionScope scope = new UFSoft.UBF.Transactions.UBFTransactionScope(UFSoft.UBF.Transactions.TransactionOption.RequiresNew))
             {
                 try
@@ -94,11 +111,7 @@
                     }
                     DrawMaterialOutAndIn drawMaterialOutAndInProxy = new DrawMaterialOutAndIn();
                     drawMaterialOutAndInProxy.SplitCondition = new UFIDA.U9.IssueNew.IssueBP.BatchIssueApplySplitCond();
-                    UFIDA.U9.Issue.MaterialDeliveryDocTypeBE.MaterialDeliveryDocType docType = UFIDA.U9.Issue.MaterialDeliveryDocTypeBE.MaterialDeliveryDocType.Finder.Find(string.Format("Org={0} and Code='{1}'", Context.LoginOrg.ID, "1"));
-                    if (docType == null)
-                    {
-                        return JsonUtil.GetFailResponse("MaterialDeliveryDocType" + U9Contant.NoFindDocType, debugInfo);
-                    }
+               
                     drawMaterialOutAndInProxy.MaterialDeliveryDocType = docType.Key;
                     drawMaterialOutAndInProxy.BatchMaterialOutDTOList = new List<MaterialInfo>();
                     drawMaterialOutAndInProxy.BatchMaterialOutDTOList = list;
@@ -162,6 +175,7 @@
                     {
                         res = JsonUtil.GetSuccessResponse(doc.DocNo, doc.DocState.Name, debugInfo);
                     }
+                   
                 }
                 catch (Exception ex)
                 {
@@ -171,6 +185,15 @@
                     return JsonUtil.GetFailResponse(Base.U9Exception.GetInnerException(ex).Message, debugInfo);
                 }
                 scope.Commit();
+                //if (beginConfirmType != docType.ConfirmType)
+                //{
+                //    using (ISession session = Session.Open())
+                //    {
+                //        docType.ConfirmType = beginConfirmType;
+                //        session.Commit();
+                //    }
+                //}
+                 
                 return res;
             }
         }

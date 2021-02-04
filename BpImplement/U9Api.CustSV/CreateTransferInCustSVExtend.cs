@@ -181,44 +181,17 @@
                     {
                         return JsonUtil.GetFailResponse("listRes == null || listRes.Count == 0", debugInfo);
                     }
-                    CommonArchiveDataDTO curDto = listRes[0];
-                    using (UFSoft.UBF.Business.Session session = UFSoft.UBF.Business.Session.Open())
+                    UFIDA.U9.InvDoc.TransferIn.TransferIn transferIn = UFIDA.U9.InvDoc.TransferIn.TransferIn.Finder.Find(string.Format("Org={0} and DocNo='{1}'", Context.LoginOrg.ID, listRes[0].Code));
+                    if (transferIn == null)
                     {
-                        UFIDA.U9.InvDoc.TransferIn.TransferIn doc = UFIDA.U9.InvDoc.TransferIn.TransferIn.Finder.Find(string.Format("Org={0} and DocNo='{1}'", Context.LoginOrg.ID, curDto.Code));
-                        if (doc == null)
-                        {
-                            return JsonUtil.GetFailResponse("transferIn == null", debugInfo);
-                        }
-                        doc.DocNo = reqHeader.WmsDocNo;
-                        doc.Memo = reqHeader.Remark;
-                        doc.BusinessDate = DateTime.Parse(reqHeader.BusinessDate);
-                        doc.SOBAccountPeriod = CommonUtil.GetSOBAccountPeriodEntity(doc.BusinessDate, Context.LoginOrg.ID);
-                        foreach (var current in doc.TransInAccountPeriods)
-                        {
-                            current.SOBAccountPeriod = doc.SOBAccountPeriod;
-                        }
-                        foreach (var transInLine in doc.TransInLines)
-                        {
-                            transInLine.StorageType = UFIDA.U9.CBO.Enums.StorageTypeEnum.Useable;
-                            foreach (var transInSubLine in transInLine.TransInSubLines)
-                            {
-                                transInSubLine.SOBAccountPeriod = doc.SOBAccountPeriod;
-                                foreach (var transInAccountPeriod in transInSubLine.TransInAccountPeriods)
-                                {
-                                    transInAccountPeriod.SOBAccountPeriod = doc.SOBAccountPeriod;
-                                }
-                                foreach (var transInBin in transInSubLine.TransInBins)
-                                {
-                                    transInBin.TimeForPickOrTally = doc.BusinessDate;
-                                }
-                            }
-                            foreach (var transInBin in transInLine.TransInBins)
-                            {
-                                transInBin.TimeForPickOrTally = doc.BusinessDate;
-                            }
-                        }
-                        doc.Status = UFIDA.U9.InvDoc.TransferIn.TransInStatus.Approving;
-                        doc.CurrAction = UFIDA.U9.InvDoc.TransferIn.TransferInActionEnum.UIUpdate;
+                        return JsonUtil.GetFailResponse("transferIn == null", debugInfo);
+                    }
+                    using (ISession session = Session.Open())
+                    {
+                        transferIn.DocNo = reqHeader.WmsDocNo;
+                        transferIn.Memo = reqHeader.Remark;
+                        transferIn.BusinessDate = DateTime.Parse(reqHeader.BusinessDate);
+
                         session.Commit();
                     }
                     //CommonArchiveDataDTO curDto = listRes[0];
@@ -227,7 +200,7 @@
                         U9Api.CustSV.ApproveTransferInCustSV sv2 = new
                           ApproveTransferInCustSV();
                         CommonApproveRequest req = new CommonApproveRequest();
-                        req.DocNo = curDto.Code;
+                        req.DocNo = transferIn.DocNo;
                         req.BusinessDate = reqHeader.BusinessDate;
                         sv2.JsonRequest = JsonUtil.GetJsonString(req);
                         res.Clear();
@@ -237,7 +210,7 @@
                     }
 
                     scope.Commit();
-                    return JsonUtil.GetSuccessResponse(curDto.Code, "", debugInfo);
+                    return JsonUtil.GetSuccessResponse(transferIn.DocNo, "", debugInfo);
                 }
                 catch (Exception ex)
                 {

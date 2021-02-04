@@ -83,7 +83,8 @@
             //LotMaster lotMaster = LotMaster.Finder.Find(string.Format("LotCode='{0}' and DataOwnerOrg={1} and Warehouse={2}", reqHeader.LotCode, organization.ID, wh.ID));
             //LotMaster.EntityList listLotMaster = LotMaster.Finder.FindAll(string.Format("LotCode='{0}' and ItemOwnerOrg={1}", reqHeader.LotCode, organization.ID));
 
-           List<LotMaster> listLotMaster = new List<LotMaster>();
+           //List<LotMaster> listLotMaster = new List<LotMaster>();
+            HashSet<LotMaster> listLotMaster = new HashSet<LotMaster>();
             //查询在手量
             //WhQoh.EntityList listWhQoh = WhQoh.Finder.FindAll($"ItemOwnOrg={organization.ID} and LotInfo.LotCode='{reqHeader.LotCode}' and Wh={wh.ID}");
             WhQoh.EntityList listWhQoh = WhQoh.Finder.FindAll($"ItemInfo.ItemID={itemMaster.ID} and LotInfo.LotCode='{reqHeader.LotCode}' and Wh={wh.ID}");
@@ -134,7 +135,12 @@
             }
             else
             {
-                return listLotMaster[0].ID.ToString();
+                string lotID = string.Empty;
+                foreach (var item in listLotMaster)
+                {
+                    lotID = item.ID.ToString();
+                }
+                return lotID;
             }
         }
     }

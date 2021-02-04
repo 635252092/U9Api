@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
     <IncrementalBuild>false</IncrementalBuild>
     <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>ConcurrencyRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
@@ -34,9 +35,13 @@
     <IncrementalBuild>false</IncrementalBuild>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Base\Response.cs" />
     <Compile Include="Base\U9Contant.cs" />
+    <Compile Include="UBFAssebmlyInfoCust.cs" />
     <Compile Include="Model\Enum\DocTypeCustEnum.cs" />
     <Compile Include="Model\Request\CommonApproveRequest.cs" />
     <Compile Include="Model\Request\CreateLotRequest.cs" />
@@ -86,6 +91,15 @@
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="UFIDA.U9.Base.BaseBP">
+      <HintPath>..\..\..\..\..\..\..\yonyou\U9V50\Portal\ApplicationServer\Libs\UFIDA.U9.Base.BaseBP.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.Base.BaseBP.Agent">
+      <HintPath>..\..\..\..\..\..\..\yonyou\U9V50\Portal\ApplicationServer\Libs\UFIDA.U9.Base.BaseBP.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.U9.Base.BaseBP.Deploy">
+      <HintPath>..\..\..\..\..\..\..\yonyou\U9V50\Portal\ApplicationServer\Libs\UFIDA.U9.Base.BaseBP.Deploy.dll</HintPath>
+    </Reference>
     <Reference Include="UFIDA.U9.CBO.PubBE, Version=25.5401.1216.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dll\UFIDA.U9.CBO.PubBE.dll</HintPath>

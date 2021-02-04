@@ -13,8 +13,8 @@ namespace U9Api.CustSV.Utils
         }
         public static void WriteExceptionLog(string msg)
         {
+            LogUtil.WriteLog("CustLog", "U9Api", "Version", System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
             LogUtil.WriteLog("CustLog", "U9Api", "Exception", msg);
-            //LogUtil.WriteLog("CustLog", "Exception", "Exception", msg);
         }
         /// <summary>
         /// 写log文件
@@ -25,7 +25,7 @@ namespace U9Api.CustSV.Utils
         /// <param name="content"></param>
         public static void WriteLog(string className, string functionName, string title, string content)
         {
-            string result = string.Format("[{0}]{3}{1}{2}{1}", title, Environment.NewLine, content, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+            string result = string.Format("[{0}]{3}{1}{2}{1}", title, Environment.NewLine, content,DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
             string rootFile = AppDomain.CurrentDomain.BaseDirectory + "CustLog" + "\\" + className + "\\" + functionName;
             if (!Directory.Exists(rootFile))

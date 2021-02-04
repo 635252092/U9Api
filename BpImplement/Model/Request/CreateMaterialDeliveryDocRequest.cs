@@ -7,6 +7,7 @@ namespace U9Api.CustSV.Model.Request
 {
     class CreateMaterialDeliveryDocRequest
     {
+        public string DocTypeCode { get; set; }
         public string WmsDocNo { get; set; }
         public string BusinessDate { get; set; }
         public bool IsAutoApprove { get; set; }
