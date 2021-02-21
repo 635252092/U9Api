@@ -60,8 +60,8 @@
             }
             string res = string.Empty;
             StringBuilder debugInfo = new StringBuilder();
-             StringBuilder errorInfo = new StringBuilder();
-           debugInfo.AppendLine("strat...");
+            StringBuilder errorInfo = new StringBuilder();
+            debugInfo.AppendLine("strat...");
             debugInfo.AppendLine(JsonUtil.GetJsonString(Context.LoginOrg == null ? "Context.LoginOrg==null" : "Context.LoginOrg ok" + Context.LoginOrg.ID));
             //原始单号
             string sourceDocNo = string.Empty;
@@ -83,9 +83,15 @@
                         }
                         if (mo.DocState != UFIDA.U9.MO.Enums.MOStateEnum.Released)
                         {
-                            debugInfo.AppendLine(mo.DocNo + ":订单不是开工状态");
-                             errorInfo.AppendLine(mo.DocNo + ":订单不是开工状态");
-                           continue;
+                            //debugInfo.AppendLine(mo.DocNo + ":订单不是开工状态");
+                            //errorInfo.AppendLine(mo.DocNo + ":订单不是开工状态");
+                            //continue; 
+                            return JsonUtil.GetFailResponse(mo.DocNo + ":订单不是开工状态");
+                        }
+                        DateTime businessDate = DateTime.Parse(reqHeader.BusinessDate);
+                        if (mo.ActualStartDate > businessDate)
+                        {
+                            return JsonUtil.GetFailResponse($"申报单完工日期/入库日期{reqHeader.BusinessDate}不能早于生产单据{mo.DocNo}实际开工日期{mo.ActualStartDate.ToString("yyyy-MM-dd HH:mm:ss")}");
                         }
                         UFIDA.U9.Complete.RcvRptBP.MOInfoDTO dto = new UFIDA.U9.Complete.RcvRptBP.MOInfoDTO();
                         dto.MOID = mo.Key;
@@ -98,7 +104,7 @@
                         dto.SCVWh = warehouse.Key;
 
 
-                        dto.CompleteDate = DateTime.Parse(reqHeader.BusinessDate);
+                        dto.CompleteDate = businessDate;
                         dto.CompleteWh = warehouse.Key;
                         dto.SCVWh = warehouse.Key;
                         dto.CompleteQty = reqLine.RcvQty;
@@ -181,21 +187,30 @@ where header.Org = {0} AND header.DocNo = '{1}'", Context.LoginOrg.ID, rcvRptDoc
                 }
                 catch (Exception ex)
                 {
-                    if (!string.IsNullOrEmpty(sourceDocNo))
-                    {
-                        LogUtil.WriteDebugInfoLog("删除start");
-                        DeleteCustSV deleteCustSV = new DeleteCustSV();
-                        DeleteCustRequest deleteCustRequest = new DeleteCustRequest();
-                        deleteCustRequest.WmsDocNo = sourceDocNo;
-                        deleteCustRequest.DocTypeCode = Model.Enum.DocTypeCustEnum.RcvRptDoc.ToString();
-
-                        deleteCustSV.JsonRequest = JsonUtil.GetJsonString(deleteCustRequest);
-                        deleteCustSV.Do();
-                        LogUtil.WriteDebugInfoLog("删除end");
-                    }
-
                     LogUtil.WriteDebugInfoLog(debugInfo.ToString());
                     scope.Rollback();
+
+                    if (!string.IsNullOrEmpty(sourceDocNo))
+                    {
+                        try
+                        {
+                            LogUtil.WriteDebugInfoLog($"{sourceDocNo}:删除start");
+                            DeleteCustSV deleteCustSV = new DeleteCustSV();
+                            DeleteCustRequest deleteCustRequest = new DeleteCustRequest();
+                            deleteCustRequest.WmsDocNo = sourceDocNo;
+                            deleteCustRequest.DocTypeCode = Model.Enum.DocTypeCustEnum.RcvRptDoc.ToString();
+
+                            deleteCustSV.JsonRequest = JsonUtil.GetJsonString(deleteCustRequest);
+                            deleteCustSV.Do();
+                            LogUtil.WriteDebugInfoLog($"{sourceDocNo}:删除end");
+                        }
+                        catch (Exception ex2)
+                        {
+                            string custMsg = sourceDocNo + "：删除失败，请联系U9管理员手动删除;";
+                            string exMsg = custMsg + Base.U9Exception.GetInnerExceptionMsg(ex2);
+                            return JsonUtil.GetFailResponse(exMsg);
+                        }
+                    }
                     //throw Base.U9Exception.GetInnerException(ex);
                     return JsonUtil.GetFailResponse(Base.U9Exception.GetInnerException(ex).Message, debugInfo);
                 }

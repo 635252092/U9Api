@@ -15,8 +15,9 @@ namespace U9Api.CustSV.Utils
 
         public static T GetJsonObject<T>(string jsonRequest)
         {
-            LogUtil.WriteLog("CustLog","U9Api","Request",jsonRequest);
-            T res = default(T);
+            //LogUtil.WriteLog("CustLog","U9Api","Request",jsonRequest);
+            LogUtil.LogResult2("CustLog","U9Api","Request",jsonRequest);
+           T res = default(T);
             try
             {
                 res = javaScriptSerializer.Deserialize<T>(jsonRequest);
@@ -40,8 +41,9 @@ namespace U9Api.CustSV.Utils
             commonResponse.u9Msg = u9Msg;
             commonResponse.custDebugInfo = (debugInfo == null ? "" : debugInfo.ToString());
             string res = javaScriptSerializer.Serialize(commonResponse);
-            LogUtil.WriteLog("CustLog", "U9Api", "Response", res);
-            return res;
+            //LogUtil.WriteLog("CustLog", "U9Api", "Response", res);
+             LogUtil.LogResult2("CustLog", "U9Api", "Response", res);
+           return res;
         }
         public static string GetSuccessResponse(string u9Msg)
         {
