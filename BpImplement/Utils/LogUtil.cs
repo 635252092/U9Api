@@ -154,7 +154,8 @@ namespace U9Api.CustSV.Utils
             FileInfo[] allFile = d.GetFiles();
             StringBuilder sb = new StringBuilder();
             sb.Append("<html><meta charset=\"utf-8\">");
-            foreach (FileInfo fi in allFile)
+            IOrderedEnumerable<FileInfo> allFile2 = allFile.OrderByDescending(f=>f.Name);
+            foreach (FileInfo fi in allFile2)
             {
                 sb.AppendLine(string.Format("<a href='{0}'>{0}</a>", fi.Name));
             }
