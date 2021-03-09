@@ -71,24 +71,26 @@ namespace U9Api.CustSV.Utils
             }
         }
         //打印日志
-       
-   private static void Print(string className, string functionName)
+
+        private static void Print(string className, string functionName)
         {
             while (true)
             {
                 var messge = string.Empty;
                 lock (m_Message)
                 {
+                    string rootFile = AppDomain.CurrentDomain.BaseDirectory + "CustLog" + "\\" + className + "\\" + functionName;
                     //队列里的条数为0时，跳出
                     if (m_Message.Count == 0)
                     {
+                        //最后一步才去创建目录
+                        CreateMuLu(rootFile, rootFile + "\\" + functionName + ".html");
                         m_IsRunning = false;
                         return;
                     }
                     //取出队列里的值
                     string result = m_Message.Dequeue();
 
-                    string rootFile = AppDomain.CurrentDomain.BaseDirectory + "CustLog" + "\\" + className + "\\" + functionName;
                     if (!Directory.Exists(rootFile))
                     {
                         DirectoryInfo directoryInfo = Directory.CreateDirectory(rootFile);
@@ -104,7 +106,6 @@ namespace U9Api.CustSV.Utils
                     result += "</html>";
                     result = result.Replace(Environment.NewLine, "<br>");
                     AppendHtmlLog(filePath, result, isCreate);
-                    CreateMuLu(rootFile, rootFile + "\\" + functionName + ".html");
                 }
             }
         }
