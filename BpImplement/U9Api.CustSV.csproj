@@ -247,6 +247,13 @@
     <Reference Include="UFIDA.U9.PM.PMSV.Agent">
       <HintPath>..\..\..\..\..\..\..\yonyou\U9V50\Portal\ApplicationServer\Libs\UFIDA.U9.PM.PMSV.Agent.dll</HintPath>
     </Reference>
+    <Reference Include="UFIDA.UBF.MD.Entity">
+      <HintPath>..\..\..\..\36lib\UFIDA.UBF.MD.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="UFIDA.UBF.MD.Entity.Deploy, Version=21.5401.7514.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\36lib\UFIDA.UBF.MD.Entity.Deploy.dll</HintPath>
+    </Reference>
     <Reference Include="UFSoft.UBF.Util.DataAccess">
       <HintPath>..\..\..\..\..\..\..\yonyou\U9V50\Portal\ApplicationServer\bin\UFSoft.UBF.Util.DataAccess.dll</HintPath>
     </Reference>

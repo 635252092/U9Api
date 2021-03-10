@@ -24,5 +24,6 @@ namespace U9Api.CustSV.Base
         public static string NoFindItemMaster = "：没有找到料品";
         public static string NoFindDocType = "：没有找到单据类型";
         public static string RcvCountOver = "创建的收货单数量大于1，请检查供应商是否一致";
+        public static string U9Fail_NoResponse = "创建失败，请检查来源单据、单据类型是否异常";
     }
 }

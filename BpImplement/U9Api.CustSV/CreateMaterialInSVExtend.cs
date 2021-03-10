@@ -108,7 +108,7 @@
                     List<ConfirmDocLineInfo> listForSV = new List<ConfirmDocLineInfo>();
                     if (listConfirmDocLineInfo == null || listConfirmDocLineInfo.Count == 0)
                     {
-                        return JsonUtil.GetFailResponse("listConfirmDocLineInfo == null || listConfirmDocLineInfo.Count == 0", debugInfo);
+                        throw U9Exception.GetException("材料入库创建失败，请检查材料出库单、生产订单和对应的备料表是否异常", debugInfo);
                     }
 
                     foreach (var reqLine in reqHeader.MaterialDeliveryDocLines)
@@ -138,7 +138,7 @@
                     }
                     if (listForSV == null || listForSV.Count == 0)
                     {
-                        return JsonUtil.GetFailResponse("listForSV == null || listForSV.Count == 0", debugInfo);
+                        throw U9Exception.GetException("材料入库创建失败，请检查材料出库单、生产订单和对应的备料表是否异常", debugInfo);
                     }
                     BatchCreateRecedeDoc sv2 = new BatchCreateRecedeDoc();
 

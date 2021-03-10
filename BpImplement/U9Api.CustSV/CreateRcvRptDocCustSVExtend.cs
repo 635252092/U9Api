@@ -79,7 +79,7 @@
 
                         if (mo == null)
                         {
-                            return JsonUtil.GetFailResponse(String.Format("创建收货单时，未根据来源单号{0}找到来源采购订单行", reqLine.SrcDocNo), debugInfo);
+                            return JsonUtil.GetFailResponse(String.Format("创建成品入库单，未根据来源单号{0}找到生产订单", reqLine.SrcDocNo), debugInfo);
                         }
                         if (mo.DocState != UFIDA.U9.MO.Enums.MOStateEnum.Released)
                         {
@@ -119,7 +119,7 @@
                     RcvRptResultDTO rcvRptResultDTO = proxy.Do();
                     if (rcvRptResultDTO == null || rcvRptResultDTO.DocNos == null || rcvRptResultDTO.DocNos.Count == 0)
                     {
-                        return JsonUtil.GetFailResponse("rcvRptResultDTO == null", debugInfo);
+                        throw U9Exception.GetException(U9Contant.U9Fail_NoResponse, debugInfo);
                     }
                     sourceDocNo = rcvRptResultDTO.DocNos[0];
                     List<CommonApproveResponse> listRes = new List<CommonApproveResponse>();

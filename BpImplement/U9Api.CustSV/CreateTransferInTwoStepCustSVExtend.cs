@@ -132,7 +132,7 @@
 					List<long> listRes = sv2.Do();
 					if (listRes == null || listRes.Count == 0)
 					{
-						return JsonUtil.GetFailResponse("listRes == null || listRes.Count == 0", debugInfo);
+						throw U9Exception.GetException(U9Contant.U9Fail_NoResponse, debugInfo);
 					}
 
 					using (ISession session = Session.Open())

@@ -133,23 +133,23 @@
                 RcvFromRTN rcvFromPODTO = sv1.Do();
                 if (rcvFromPODTO == null || rcvFromPODTO.Rcvs == null)
                 {
-                    return JsonUtil.GetFailResponse("rcvFromPODTO == null || rcvFromPODTO.Rcvs == null", debugInfo);
-                }
+                        throw U9Exception.GetException(U9Contant.U9Fail_NoResponse, debugInfo);
+                    }
                 System.Collections.ArrayList arrayList = (System.Collections.ArrayList)rcvFromPODTO.Rcvs ;
                 List<RcvHeadDTOData> listRcvHeadDTOData = new List<RcvHeadDTOData>();
                 foreach (object current4 in arrayList)
                 {
                     listRcvHeadDTOData.Add(current4 as RcvHeadDTOData);
                 }
-                   
-                if (listRcvHeadDTOData == null || listRcvHeadDTOData.Count == 0)
-                {
-                    return JsonUtil.GetFailResponse("listRcvHeadDTOData == null || listRcvHeadDTOData.Count == 0", debugInfo);
-                }
-                else if (listRcvHeadDTOData.Count > 1)
-                {
-                    return JsonUtil.GetFailResponse("创建的收货单数量超过1个，请检查来源订单的供应商是否一致", debugInfo);
-                }
+
+                    if (listRcvHeadDTOData == null || listRcvHeadDTOData.Count == 0)
+                    {
+                        throw U9Exception.GetException(U9Contant.U9Fail_NoResponse, debugInfo);
+                    }
+                    else if (listRcvHeadDTOData.Count > 1)
+                    {
+                        return JsonUtil.GetFailResponse("创建的收货单数量超过1个，请检查来源订单的供应商是否一致", debugInfo);
+                    }
                 RcvHeadDTOData rcvHeadDTOData = listRcvHeadDTOData[0];
                 //Receivement r2 = Receivement.Finder.Find(string.Format("Org={0} and DocNo='{1}'", Context.LoginOrg.ID, rcvHeadDTOData.RcvHead.DocNo));
                 //if (r2 == null)

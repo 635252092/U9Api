@@ -171,7 +171,7 @@
                     List<CommonArchiveDataDTO> listRes = client.Do();
                     if (listRes == null || listRes.Count == 0)
                     {
-                        return JsonUtil.GetFailResponse("resDto == null || resDto.Count == 0", debugInfo);
+                        throw U9Exception.GetException(U9Contant.U9Fail_NoResponse, debugInfo);
                     }
                     CommonArchiveDataDTO doc = listRes[0];
                     //修改批号的有效期

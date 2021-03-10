@@ -179,7 +179,7 @@
                     List<CommonArchiveDataDTO> listRes = client.Do();
                     if (listRes == null || listRes.Count == 0)
                     {
-                        return JsonUtil.GetFailResponse("listRes == null || listRes.Count == 0", debugInfo);
+                        throw U9Exception.GetException(U9Contant.U9Fail_NoResponse, debugInfo);
                     }
                     UFIDA.U9.InvDoc.TransferIn.TransferIn transferIn = UFIDA.U9.InvDoc.TransferIn.TransferIn.Finder.Find(string.Format("Org={0} and DocNo='{1}'", Context.LoginOrg.ID, listRes[0].Code));
                     if (transferIn == null)

@@ -114,14 +114,14 @@
                 //pOToRcvSVProxy.RcvDocType = UFIDA.U9.PM.Pub.RcvDocType.FindByCode( Context.LoginOrg,reqHeader.RcvDocType).Key;
 
                 RcvFromPODTO rcvFromPODTO = pOToRcvSVProxy.Do();
-                if (rcvFromPODTO == null || rcvFromPODTO.RcvDTOs == null || rcvFromPODTO.RcvDTOs.Count == 0)
-                {
-                    return JsonUtil.GetFailResponse("rcvFromPODTO == null || rcvFromPODTO.RcvDTOs == null || rcvFromPODTO.RcvDTOs.Count == 0", debugInfo);
-                }
-                else if (rcvFromPODTO.RcvDTOs.Count > 1)
-                {
-                    return JsonUtil.GetFailResponse(U9Contant.RcvCountOver, debugInfo);
-                }
+                    if (rcvFromPODTO == null || rcvFromPODTO.RcvDTOs == null || rcvFromPODTO.RcvDTOs.Count == 0)
+                    {
+                        throw U9Exception.GetException(U9Contant.U9Fail_NoResponse, debugInfo);
+                    }
+                    else if (rcvFromPODTO.RcvDTOs.Count > 1)
+                    {
+                        throw U9Exception.GetException(U9Contant.RcvCountOver, debugInfo);
+                    }
 
                 RcvHeadDTOData rcvHeadDTOData = (RcvHeadDTOData)rcvFromPODTO.RcvDTOs[0];
 

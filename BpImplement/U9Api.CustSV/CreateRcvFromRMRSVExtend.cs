@@ -125,7 +125,7 @@
                     List<RcvHeadDTOData> listRcvHeadDTOData = (List<RcvHeadDTOData>)rcvFromRMRDTO.RcvHeadDatas;
                     if (listRcvHeadDTOData == null || listRcvHeadDTOData.Count == 0)
                     {
-                        return JsonUtil.GetFailResponse("listRcvHeadDTOData == null || listRcvHeadDTOData.Count == 0", debugInfo);
+                        throw U9Exception.GetException(U9Contant.U9Fail_NoResponse, debugInfo);
                     }
                     else if (listRcvHeadDTOData.Count > 1)
                     {
